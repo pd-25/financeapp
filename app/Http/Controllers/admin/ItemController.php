@@ -16,7 +16,7 @@ class ItemController extends Controller
     {
         return view('admin.client.pages.clientitems', [
             // 'clientitems' => Item::where('client_id', $client_id)->orderByDesc('id')->paginate(10),
-            // 'client' => Client::where('id', $client_id)->first(),
+            'client' => Client::where('id', $client_id)->first(),
         ]);
     }
 
