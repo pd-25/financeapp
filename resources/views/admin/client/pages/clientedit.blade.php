@@ -24,7 +24,7 @@
                         {{--  --}}
                         <div class="row mb-3">
                             <div class="col-sm-4">
-                                <label for="inputText" class="col-sm-4 col-form-label">Full Name <span
+                                <label for="inputText" class="col-sm-5 col-form-label">Full Name <span
                                         class="text-danger">*</span></label>
                                 <input type="text" name="first_name" class="form-control"
                                     value="{{ $client->first_name }}">
@@ -36,7 +36,7 @@
                             </div>
 
                             <div class="col-sm-4">
-                                <label for="inputText" class="col-sm-4 col-form-label">Middle Name</label>
+                                <label for="inputText" class="col-sm-5 col-form-label">Middle Name</label>
                                 <input type="text" name="middle_name" class="form-control"
                                     value="{{ $client->middle_name }}">
                                 @error('middle_name')
@@ -47,7 +47,7 @@
                             </div>
 
                             <div class="col-sm-4">
-                                <label for="inputText" class="col-sm-4 col-form-label">Last Name<span
+                                <label for="inputText" class="col-sm-5 col-form-label">Last Name<span
                                         class="text-danger">*</span></label>
                                 <input type="text" name="last_name" class="form-control"
                                     value="{{ $client->last_name }}">
@@ -60,7 +60,7 @@
 
 
                             <div class="col-sm-4">
-                                <label for="inputText" class="col-sm-4 col-form-label">Email<span
+                                <label for="inputText" class="col-sm-5 col-form-label">Email<span
                                         class="text-danger">*</span></label>
                                 <input type="text" name="email" class="form-control"
                                     value="{{ $client->email }}">
@@ -72,7 +72,7 @@
                             </div>
 
                             <div class="col-sm-4">
-                                <label for="inputText" class="col-sm-4 col-form-label">DOB</label>
+                                <label for="inputText" class="col-sm-5 col-form-label">DOB</label>
                                 <input type="date" name="dob" class="form-control"
                                     value="{{ $client->dob }}">
                                 @error('dob')
@@ -83,7 +83,7 @@
                             </div>
 
                             <div class="col-sm-4">
-                                <label for="inputText" class="col-sm-4 col-form-label">SSN</label>
+                                <label for="inputText" class="col-sm-5 col-form-label">SSN</label>
                                 <input type="text" name="ssn" class="form-control"
                                     value="{{ $client->ssn }}">
                                 @error('ssn')
@@ -142,7 +142,7 @@
                             </div>
 
                             <div class="col-sm-12">
-                                <label for="inputText" class="col-sm-4 col-form-label">Current
+                                <label for="inputText" class="col-sm-5 col-form-label">Current
                                     Address</label>
                                 <input type="text" name="current_address" class="form-control"
                                     value="{{ $client->current_address }}">
@@ -154,7 +154,7 @@
                             </div>
 
                             <div class="col-sm-4">
-                                <label for="inputText" class="col-sm-4 col-form-label">City</label>
+                                <label for="inputText" class="col-sm-5 col-form-label">City</label>
                                 <input type="text" name="city" class="form-control"
                                     value="{{ $client->city }}">
                                 @error('city')
@@ -165,7 +165,7 @@
                             </div>
 
                             <div class="col-sm-4">
-                                <label for="inputText" class="col-sm-4 col-form-label">State</label>
+                                <label for="inputText" class="col-sm-5 col-form-label">State</label>
                                 <input type="text" name="state" class="form-control"
                                     value="{{ $client->state }}">
                                 @error('state')
@@ -176,7 +176,7 @@
                             </div>
 
                             <div class="col-sm-4">
-                                <label for="inputText" class="col-sm-4 col-form-label">Zipcode</label>
+                                <label for="inputText" class="col-sm-5 col-form-label">Zipcode</label>
                                 <input type="number" name="zipcode" class="form-control"
                                     value="{{ $client->zipcode }}">
                                 @error('zipcode')
@@ -188,7 +188,7 @@
 
 
                             <div class="col-sm-12">
-                                <label for="inputText" class="col-sm-4 col-form-label">Current
+                                <label for="inputText" class="col-sm-5 col-form-label">Current
                                     Address</label>
                                 <input type="text" name="billing_address" class="form-control"
                                     value="{{ $client->billing_address }}">
@@ -200,7 +200,7 @@
                             </div>
 
                             <div class="col-sm-4">
-                                <label for="inputText" class="col-sm-4 col-form-label">City</label>
+                                <label for="inputText" class="col-sm-5 col-form-label">City</label>
                                 <input type="text" name="billing_city" class="form-control"
                                     value="{{ $client->billing_city }}">
                                 @error('billing_city')
@@ -211,7 +211,7 @@
                             </div>
 
                             <div class="col-sm-4">
-                                <label for="inputText" class="col-sm-4 col-form-label">State</label>
+                                <label for="inputText" class="col-sm-5 col-form-label">State</label>
                                 <input type="text" name="billing_state" class="form-control"
                                     value="{{ $client->billing_state }}">
                                 @error('billing_state')
@@ -222,7 +222,7 @@
                             </div>
 
                             <div class="col-sm-4">
-                                <label for="inputText" class="col-sm-4 col-form-label">Zipcode</label>
+                                <label for="inputText" class="col-sm-5 col-form-label">Zipcode</label>
                                 <input type="number" name="billing_zipcode" class="form-control"
                                     value="{{ $client->billing_zipcode }}">
                                 @error('billing_zipcode')
@@ -247,7 +247,83 @@
                     </form>
                 </div>
                 <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
-                    aria-labelledby="v-pills-profile-tab">...</div>
+                    aria-labelledby="v-pills-profile-tab">
+                    <form action="{{ route('monitoring-infos.store') }}" method="POST" id="monitoring-info">
+                        @method('POST')
+                        @csrf
+
+                        {{--  --}}
+                        <div class="row mb-3">
+                            <div class="col-sm-4">
+                                <label for="inputText" class="col-sm-7 col-form-label">Monitoring Site <span
+                                        class="text-danger">*</span></label>
+                                <select name="report_source_id" class="form-control">
+                                    <option value="">--select site--</option>
+                                    @forelse ($reportSources as $reportSource)
+                                    <option {{ $reportSource->id ==$client?->monitoringinfo?->report_source_id ? 'selected' : ''}} value="{{$reportSource->id}}">{{$reportSource->name}}</option>
+                                    @empty
+                                    <option value="">Not found</option>
+                                    @endforelse
+                                   
+                                </select>
+                                @error('report_source_id')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label for="inputText" class="col-sm-5 col-form-label">Username</label>
+                                <input type="text" name="username" class="form-control"
+                                    value="{{ $client?->monitoringinfo?->username }}">
+                                @error('username')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label for="inputText" class="col-sm-5 col-form-label">Password<span
+                                        class="text-danger">*</span></label>
+                                <input type="text" name="password" class="form-control"
+                                    value="{{ $client?->monitoringinfo?->password }}">
+                                @error('password')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label for="inputText" class="col-sm-5 col-form-label">Seurity Word<span
+                                        class="text-danger">*</span></label>
+                                <input type="text" name="security_word" class="form-control"
+                                    value="{{ $client?->monitoringinfo?->security_word }}">
+                                @error('security_word')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+
+                            
+                        {{--  --}}
+
+
+                        <div class="row mb-3">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-sm btn-primary float-end m-2"
+                                    id="monitoringsubmitBtn">Submit Form</button>
+                                <a href="{{ route('clients.index') }}" type="submit"
+                                    class="btn btn-sm btn-danger float-end m-2">Cancel</a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
             </div>
         </div>
 
@@ -336,6 +412,88 @@
                 event.preventDefault();
                 handleFormSubmission();
             });
+
+
+            const formMonitoring = document.querySelector('#monitoring-info');
+            formMonitoring.addEventListener('submit', function(event) {
+                event.preventDefault();
+                handleFormSubmissionMonitoring();
+            });
+            function handleFormSubmissionMonitoring(){
+                const submitBtn = document.getElementById('monitoringsubmitBtn');
+                const form = document.querySelector('#monitoring-info');
+                const formData = new FormData(form);
+                const clientId = window.location.pathname.split('/')[3]; // Assuming the client_id is at segment 3
+                formData.append('client_id', clientId);
+                submitBtn.innerHTML =
+                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+                submitBtn.disabled = true;
+                const formAction = form.action;
+
+                fetch(formAction, {
+                        method: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                            "Accept": "application/json"
+                        },
+                        body: formData
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(data => {
+                                throw data;
+                            });
+                        }
+                        return response.json(); // Handle success response
+                    })
+                    .then(data => {
+                        if (data.status === 'success') {
+                            swal(data.msg, "", "success")
+                                .then(() => {
+                                    // window.location.href = data.toUrl;
+                                    submitBtn.innerHTML = 'Submit';
+                                    submitBtn.disabled = false;
+                                });
+                        } else {
+                            swal("Error creating expenditure. Please try again.", "", "error");
+                            submitBtn.innerHTML = 'Submit';
+                            submitBtn.disabled = false;
+                        }
+                    })
+                    .catch(error => {
+                        if (error.errors) {
+                            // Clear previous error messages before adding new ones
+                            document.querySelectorAll('.text-danger').forEach(element => {
+                                element.remove();
+                            });
+
+                            // Display validation errors next to the respective fields
+                            for (const [key, messages] of Object.entries(error.errors)) {
+                                const inputElement = document.querySelector(`[name="${key}"]`);
+                                if (inputElement) {
+                                    // Only create and append new error messages if they don't exist already
+                                    let errorElement = inputElement.parentElement.querySelector('.text-danger');
+                                    if (!errorElement) {
+                                        errorElement = document.createElement('span');
+                                        errorElement.classList.add('text-danger');
+                                        inputElement.parentElement.appendChild(errorElement);
+                                    }
+
+                                    errorElement.innerHTML = `<strong>${messages.join(' ')}</strong>`;
+                                }
+                            }
+                        } else {
+                            swal("Some error occurred. Please try again.", "", "error");
+                        }
+
+                        // Re-enable the submit button
+                        submitBtn.innerHTML = 'Submit';
+                        submitBtn.disabled = false;
+                    });
+            }
+
+
+            
         })
     </script>
 @endsection

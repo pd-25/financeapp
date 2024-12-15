@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-
-class Client extends Model
+class MonotoringInfo extends Model
 {
-   protected $fillable = ["first_name","middle_name","last_name","email","is_notify_email","dob","ssn","phone","phone_home","phone_work","current_address","city","state","zipcode","billing_address","billing_city","billing_state","billing_zipcode","occupation","anual_income", "slug"];
+    protected $fillable = ["slug", "report_source_id", "username", "password","client_id", "security_word"];
 
-   /**
+    /**
      * Boot the model.
      */
     protected static function boot()
@@ -17,7 +16,7 @@ class Client extends Model
         parent::boot();
 
         static::creating(function ($user) {
-            $user->slug = static::generateUniqueSlug($user->first_name);
+            $user->slug = static::generateUniqueSlug($user->username);
         });
     }
 
@@ -32,14 +31,10 @@ class Client extends Model
         $slug = Str::slug($name);
         $originalSlug = $slug;
 
-        while (Client::where('slug', $slug)->exists()) {
+        while (MonotoringInfo::where('slug', $slug)->exists()) {
             $slug = $originalSlug . '-' . time();
         }
 
         return $slug;
-    }
-
-    public function monitoringinfo(){
-        return $this->hasOne(MonotoringInfo::class, 'client_id', 'id');
     }
 }

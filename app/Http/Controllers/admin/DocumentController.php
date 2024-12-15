@@ -89,8 +89,9 @@ class DocumentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $slug)
     {
-        //
+     Document::where('slug', $slug)->delete();
+     return back()->with('msg', 'Document has been deleted successsfully..');
     }
 }

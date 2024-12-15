@@ -46,7 +46,7 @@
                                                 </button>
                                                     </a>
                                             <form method="POST"
-                                                action="{{ route('instructions.destroy', $clientdocument?->slug) }}"
+                                                action="{{ route('client-documents.destroy', $clientdocument?->slug) }}"
                                                 class="d-inline-block pl-2">
                                                 @csrf
                                                 @method('DELETE')

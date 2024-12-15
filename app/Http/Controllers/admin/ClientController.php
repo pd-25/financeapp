@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\ReportSource;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -65,7 +66,8 @@ class ClientController extends Controller
     public function edit(string $slug)
     {
         return view('admin.client.pages.clientedit', [
-            'client' => Client::where('slug', $slug)->first()
+            'client' => Client::with('monitoringinfo')->where('slug', $slug)->first(),
+            'reportSources' => ReportSource::get(),
         ]);
     }
 
@@ -85,7 +87,7 @@ class ClientController extends Controller
             return response()->json([
                 'status' => 'success',
                 'toUrl' => route('clients.index'),
-                'msg' => $request?->first_name . 'Client Updated Successfully..!',
+                'msg' => $request?->first_name . ' Client Updated Successfully..!',
             ]);
         } else {
             return back()->with('msg', 'Some error occur..');

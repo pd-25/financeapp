@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\DisputeLetterController;
 use App\Http\Controllers\admin\DocumentController;
 use App\Http\Controllers\admin\InstructionController;
 use App\Http\Controllers\admin\ItemController;
+use App\Http\Controllers\admin\MonitoringInfoController;
 use App\Http\Controllers\admin\ReportSourceController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,8 +22,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::resource('/report-sources', ReportSourceController::class);
     Route::resource('/bureau-address', BureauAddressController::class);
     Route::resource('/instructions', InstructionController::class);
+    Route::resource('/monitoring-infos', MonitoringInfoController::class)->except('index', 'delete', 'update');
     Route::get('/client-documents/{client_slug}', [DocumentController::class, 'index'])->name('client-documents.index');
     Route::post('/client-documents/{client_slug}', [DocumentController::class, 'store'])->name('client-documents.store');
+    Route::delete('/client-documents/{client_slug}', [DocumentController::class, 'destroy'])->name('client-documents.destroy');
 
     Route::get('/client-items/{client_id}', [ItemController::class, 'index'])->name('client-items.index');
     
