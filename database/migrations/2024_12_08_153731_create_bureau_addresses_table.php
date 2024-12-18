@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('bureau_addresses', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->unique();
+            $table->string('name')->comment('Name is the type of address like experion/Equfax...  this handled by Enum class');
+            $table->string('address');
+            $table->string('city');
+            $table->string('state');
+            $table->string('zipcode');
+            $table->string('phone');
+            $table->string('fax');
             $table->timestamps();
         });
     }
