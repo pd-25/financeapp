@@ -1,11 +1,12 @@
 <div class="card-body">
 
-    <h5 class="card-title">Client Items</h5>
-    <u>
+    <div class="d-flex align-items-center mb-3 justify-content-between">
+        <h5 class="card-title">Client Items</h5>
         <a href="javascript:void(0)" wire:click="toggleForm">
             <span id="add-hide-btn">{{ $formVisible ? 'Hide Item Form' : 'Add Item Form' }}</span>
         </a>
-    </u>
+    </div>
+    
     @if ($formVisible)
         <form wire:submit.prevent="save" id="dataForm">
             <div class="row">
