@@ -35,6 +35,7 @@
             background-color: #eee5e5
         }
     </style>
+    @livewireStyles
 </head>
 
 <body>
@@ -103,6 +104,7 @@
     </script>
 
     @yield('script')
+    @livewireScripts
 </body>
 
 </html>

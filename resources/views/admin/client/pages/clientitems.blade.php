@@ -1,277 +1,64 @@
 @extends('admin.client.edit')
 @section('clientcontent')
     <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Client Items</h5>
-            <form id="dataForm" method="POST" action="">
-                <div class="row">
-                    <!-- Equifax Section -->
-                    <div class="col-4">
-                        <div class="d-flex align-items-center mb-3">
-                            <!-- Title and Image Side by Side -->
-                            <h6 class="mb-0"><b>Equifax</b></h6>
-                            <img src="{{ asset('assets/equfax.png') }}" alt="Equifax Logo" class="ms-3"
-                                style="width: 100px; height: 60px; object-fit: cover;">
-                        </div>
-                        <select name="type" class="form-control">
-                            <option value="">--select--</option>
-                            <option value="">Negative</option>
-                            <option value="">Deleted</option>
-                            <option value="">Not reported</option>
-                            <option value="">do not process</option>
-                        </select>
-                        <div class="mb-3">
-                            <label class="form-label">Item Name:</label>
-                            <input type="text" class="form-control" id="itemNameEquifax" placeholder="Enter item name">
-                            <div class="form-check">
-                                {{-- <input class="form-check-input" type="checkbox" id="sameItemNameEquifax">
-                                <label class="form-check-label" for="sameItemNameEquifax">Same Item Name</label> --}}
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Item Type:</label>
-                            <select class="form-select" id="itemTypeEquifax">
-                                <option selected>--Please select item type--</option>
-                                @foreach (\App\enum\ItemTypeEnum::values() as $itemF)
-                                <option value="{{$itemF}}">{{$itemF}}</option>
-                                @endforeach
-                            </select>
-                            <div class="form-check">
-                                {{-- <input class="form-check-input" type="checkbox" id="sameItemTypeEquifax">
-                                <label class="form-check-label" for="sameItemTypeEquifax">Same Item Type</label> --}}
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Account Number:</label>
-                            <input type="text" class="form-control" id="accountNumber"
-                                placeholder="Enter account number">
-                            <div class="form-check">
-                                {{-- <input class="form-check-input" type="checkbox" id="sameItemNameEquifax">
-                                    <label class="form-check-label" for="sameItemNameEquifax">Same Item Name</label> --}}
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Open Date:</label>
-                            <input type="text" class="form-control" id="dateLastPayment"
-                                placeholder="Enter date of last payment">
-                            <div class="form-check">
-                                {{-- <input class="form-check-input" type="checkbox" id="sameItemNameEquifax">
-                                    <label class="form-check-label" for="sameItemNameEquifax">Same Item Name</label> --}}
-                            </div>
-                        </div>
-
-                        <!-- Status -->
-                        <div class="mb-3">
-                            <label class="form-label">Status:</label>
-                            <select class="form-control" id="status">
-                                <option value="">Select status</option>
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
-                            <div class="form-check">
-                                {{-- <input class="form-check-input" type="checkbox" id="sameItemNameEquifax">
-                                <label class="form-check-label" for="sameItemNameEquifax">Same Item Name</label> --}}
-                            </div>
-                        </div>
-
-
-                        <!-- Internal Notes -->
-                        <div class="mb-3">
-                            <label class="form-label">Internal Notes:</label>
-                            <textarea class="form-control" id="internalNotes" rows="3" placeholder="Enter internal notes"></textarea>
-                            <div class="form-check">
-                                {{-- <input class="form-check-input" type="checkbox" id="sameItemNameEquifax">
-                                <label class="form-check-label" for="sameItemNameEquifax">Same Item Name</label> --}}
-                            </div>
-                        </div>
-
-                        <!-- Add more fields with checkboxes as needed -->
-                    </div>
-
-                    <!-- Experian Section -->
-                    <div class="col-4">
-                        <div class="d-flex align-items-center mb-3">
-                            <h6><b>Experian</b></h6>
-                            <img src="{{ asset('assets/experian.png') }}" alt="Equifax Logo"
-                                style="width: 100px; height: 60px; object-fit: cover;">
-                        </div>
-
-
-                        <select name="" class="form-control">
-                            <option value="">--select--</option>
-                            <option value="">Negative</option>
-                            <option value="">Deleted</option>
-                            <option value="">Not reported</option>
-                            <option value="">do not process</option>
-                        </select>
-                        <div class="mb-3">
-                            <label class="form-label">Item Name:</label>
-                            <input type="text" class="form-control" id="itemNameExperian" placeholder="Enter item name">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sameItemNameExperian">
-                                <label class="form-check-label" for="sameItemNameExperian">Same Item Name</label>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Item Type:</label>
-                            <select class="form-select" id="itemTypeExperian">
-                                <option selected>--Please select item type--</option>
-                                @foreach (\App\enum\ItemTypeEnum::values() as $itemS)
-                                <option value="{{$itemS}}">{{$itemS}}</option>
-                                @endforeach
-                            </select>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sameItemTypeExperian">
-                                <label class="form-check-label" for="sameItemTypeExperian">Same Item Type</label>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Account Number:</label>
-                            <input type="text" class="form-control" id="accountNumber"
-                                placeholder="Enter account number">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sameItemTypeTransUnion">
-                                <label class="form-check-label" for="sameItemTypeTransUnion">Same Item Type</label>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Open Date:</label>
-                            <input type="text" class="form-control" id="dateLastPayment"
-                                placeholder="Enter date of last payment">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sameItemTypeTransUnion">
-                                <label class="form-check-label" for="sameItemTypeTransUnion">Same Item Type</label>
-                            </div>
-                        </div>
-
-                        <!-- Status -->
-                        <div class="mb-3">
-                            <label class="form-label">Status:</label>
-                            <select class="form-control" id="status">
-                                <option value="">Select status</option>
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sameItemTypeTransUnion">
-                                <label class="form-check-label" for="sameItemTypeTransUnion">Same Item Type</label>
-                            </div>
-                        </div>
-
-
-                        <!-- Internal Notes -->
-                        <div class="mb-3">
-                            <label class="form-label">Internal Notes:</label>
-                            <textarea class="form-control" id="internalNotes" rows="3" placeholder="Enter internal notes"></textarea>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sameItemTypeTransUnion">
-                                <label class="form-check-label" for="sameItemTypeTransUnion">Same Item Type</label>
-                            </div>
-                        </div>
-                        <!-- Add more fields with checkboxes as needed -->
-                    </div>
-
-                    <!-- TransUnion Section -->
-                    <div class="col-4">
-                        <div class="d-flex align-items-center mb-3">
-                            <h6><b>TransUnion</b></h6>
-                            <img src="{{ asset('assets/transunion.png') }}" alt="Equifax Logo"
-                                style="width: 195px; height: 60px; object-fit: cover;">
-                        </div>
-
-                        <div class="d-flex">
-                            <select name="" class="form-control">
-                                <option value="">--select--</option>
-                                <option value="">Negative</option>
-                                <option value="">Deleted</option>
-                                <option value="">Not reported</option>
-                                <option value="">do not process</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Item Name:</label>
-                            <input type="text" class="form-control" id="itemNameTransUnion"
-                                placeholder="Enter item name">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sameItemNameTransUnion">
-                                <label class="form-check-label" for="sameItemNameTransUnion">Same Item Name</label>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Item Type:</label>
-                            <select class="form-select" id="itemTypeTransUnion">
-                                <option selected>--Please select item type--</option>
-                                @foreach (\App\enum\ItemTypeEnum::values() as $itemT)
-                                <option value="{{$itemT}}">{{$itemT}}</option>
-                                @endforeach
-                            </select>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sameItemTypeTransUnion">
-                                <label class="form-check-label" for="sameItemTypeTransUnion">Same Item Type</label>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Account Number:</label>
-                            <input type="text" class="form-control" id="accountNumber"
-                                placeholder="Enter account number">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sameItemTypeTransUnion">
-                                <label class="form-check-label" for="sameItemTypeTransUnion">Same Item Type</label>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Open Date:</label>
-                            <input type="text" class="form-control" id="dateLastPayment"
-                                placeholder="Enter date of last payment">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sameItemTypeTransUnion">
-                                <label class="form-check-label" for="sameItemTypeTransUnion">Same Item Type</label>
-                            </div>
-                        </div>
-
-                        <!-- Status -->
-                        <div class="mb-3">
-                            <label class="form-label">Status:</label>
-                            <select class="form-control" id="status">
-                                <option value="">Select status</option>
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sameItemTypeTransUnion">
-                                <label class="form-check-label" for="sameItemTypeTransUnion">Same Item Type</label>
-                            </div>
-                        </div>
-
-
-                        <!-- Internal Notes -->
-                        <div class="mb-3">
-                            <label class="form-label">Internal Notes:</label>
-                            <textarea class="form-control" id="internalNotes" rows="3" placeholder="Enter internal notes"></textarea>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sameItemTypeTransUnion">
-                                <label class="form-check-label" for="sameItemTypeTransUnion">Same Item Type</label>
-                            </div>
-                        </div>
-                        <!-- Add more fields with checkboxes as needed -->
-                    </div>
-                </div>
-
-                <!-- Buttons -->
-                <div class="form-group row mt-3">
-                    <div class="col-sm-12 text-right">
-                        <button type="submit" class="btn btn-success" id="submitBtn">Save and Add New</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+        <livewire:client-item>
     </div>
 @endsection
 @section('script')
     <script>
-       
+        // document.addEventListener("DOMContentLoaded", () => {
+        //     // Auto-update item name
+        //     document.querySelector("#equfax-item_name]").addEventListener("input", function() {
+        //         const value = this.value;
+        //         document.querySelector("[#experian-item_name").value = value;
+        //         document.querySelector("[#experian-item_name").value = value;
+        //     });
 
+        //     // Auto-update item type
+        //     document.querySelector("[#equfax-item_type").addEventListener("change", function() {
+        //         const value = this.value;
+        //         document.querySelector("[#experian-item_type").value = value;
+        //         document.querySelector("[#experian-item_type").value = value;
+        //     });
+
+        //     // Auto-update account number
+        //     document.querySelector("[#equfax-account_no").addEventListener("input", function() {
+        //         const value = this.value;
+        //         document.querySelector("[#experian-account_no").value = value;
+        //         document.querySelector("[#experian-account_no").value = value;
+        //     });
+
+        //     // Auto-update open date
+        //     document.querySelector("[#equfax-open_date").addEventListener("input", function() {
+        //         const value = this.value;
+        //         document.querySelector("[#experian-open_date").value = value;
+        //         document.querySelector("[#experian-open_date").value = value;
+        //     });
+
+        //     // Auto-update status
+        //     document.querySelector("[#equfax-status").addEventListener("change", function() {
+        //         const value = this.value;
+        //         document.querySelector("[#experian-status").value = value;
+        //         document.querySelector("[#experian-status").value = value;
+        //     });
+
+            // document.querySelector('#add-hide-btn').addEventListener("click", function() {
+            //     const form = document.querySelector('#dataForm'); // Get the form element
+            //     const addHideBtn = document.querySelector('#add-hide-btn'); // Get the button text element
+
+            //     if (form.classList.contains('d-none')) {
+            //         // Remove `d-none` to show the form
+            //         form.classList.remove('d-none');
+            //         // Update the button text to "Hide Item"
+            //         addHideBtn.textContent = 'Hide Item Form';
+            //     } else {
+            //         // Add `d-none` to hide the form
+            //         form.classList.add('d-none');
+            //         // Update the button text to "Add Item"
+            //         addHideBtn.textContent = 'Add Item Form';
+            //     }
+            // });
+        // });
         // document.addEventListener('DOMContentLoaded', function() {
         //     function handleFormSubmission() {
         //         const submitBtn = document.getElementById('submitBtn');
