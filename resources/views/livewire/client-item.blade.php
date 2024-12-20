@@ -2,14 +2,18 @@
 
     <div class="d-flex align-items-center mb-3 justify-content-between">
         <h5 class="card-title">Client Items</h5>
+        @if (Session::has('msg'))
+                            <p id="flash-message" class="alert alert-info">{{ Session::get('msg') }}</p>
+                        @endif
         <a href="javascript:void(0)" wire:click="toggleForm">
-            <span id="add-hide-btn">{{ $formVisible ? 'Hide Item Form' : 'Add Item Form' }}</span>
+           <u> <span id="add-hide-btn">{{ $formVisible ? 'Hide Item Form' : 'Add Item Form' }}</span></u>
         </a>
     </div>
     
     @if ($formVisible)
         <form wire:submit.prevent="save" id="dataForm">
             <div class="row">
+                
                 <!-- Equifax Section -->
                 <div class="col-4">
                     <div class="d-flex align-items-center mb-3">
@@ -22,14 +26,14 @@
                     <!-- Bureau Status -->
                     <div class="mb-3">
                         <label class="form-label">Bureau Status:</label>
-                        <select wire:model="form.equifax.0.bureau_status" class="form-control">
+                        <select wire:model="equifax_bureau_status" class="form-control">
                             <option value="">--select--</option>
-                            <option value="Negative">Negative</option>
-                            <option value="Deleted">Deleted</option>
-                            <option value="Not reported">Not reported</option>
-                            <option value="do not process">Do not process</option>
+                            @foreach (\App\enum\BureauStatusEnum::values() as $bureau)
+                                <option value="{{ $bureau }}">{{ $bureau }}</option>
+                            @endforeach
+                            
                         </select>
-                        @error('form.equifax.0.bureau_status')
+                        @error('equifax_bureau_status')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -38,8 +42,8 @@
                     <div class="mb-3">
                         <label class="form-label">Item Name:</label>
                         <input type="text" class="form-control" id="equfax-item_name" placeholder="Enter item name"
-                            wire:model="form.equifax.0.item_name" wire:keyup="syncItemName(0)">
-                        @error('form.equifax.0.item_name')
+                            wire:model="equifax_item_name" wire:keyup="syncItemName(0)">
+                        @error('equifax_item_name')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -47,13 +51,13 @@
                     <!-- Item Type -->
                     <div class="mb-3">
                         <label class="form-label">Item Type:</label>
-                        <select class="form-select" id="equfax-item_type" wire:model="form.equifax.0.item_type">
+                        <select class="form-select" id="equfax-item_type" wire:model="equifax_item_type">
                             <option selected>--Please select item type--</option>
                             @foreach (\App\enum\ItemTypeEnum::values() as $itemF)
                                 <option value="{{ $itemF }}">{{ $itemF }}</option>
                             @endforeach
                         </select>
-                        @error('form.equifax.0.item_type')
+                        @error('equifax_item_type')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -62,8 +66,8 @@
                     <div class="mb-3">
                         <label class="form-label">Account Number:</label>
                         <input type="text" class="form-control" id="equfax-account_no"
-                            placeholder="Enter account number" wire:model="form.equifax.0.account_no">
-                        @error('form.equifax.0.account_no')
+                            placeholder="Enter account number" wire:model="equifax_account_no">
+                        @error('equifax_account_no')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -72,8 +76,8 @@
                     <div class="mb-3">
                         <label class="form-label">Open Date:</label>
                         <input type="date" class="form-control" id="equfax-open_date"
-                            placeholder="Enter date of last payment" wire:model="form.equifax.0.open_date">
-                        @error('form.equifax.0.open_date')
+                            placeholder="Enter date of last payment" wire:model="equifax_open_date">
+                        @error('equifax_open_date')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -81,12 +85,12 @@
                     <!-- Status -->
                     <div class="mb-3">
                         <label class="form-label">Status:</label>
-                        <select class="form-control" id="equfax-status" wire:model="form.equifax.0.status">
+                        <select class="form-control" id="equfax-status" wire:model="equifax_status">
                             <option value="">Select status</option>
                             <option value="1">Active</option>
                             <option value="0">Inactive</option>
                         </select>
-                        @error('form.equifax.0.status')
+                        @error('equifax_status')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -94,7 +98,7 @@
                     <!-- Internal Notes -->
                     <div class="mb-3">
                         <label class="form-label">Internal Notes:</label>
-                        <select id="internalNotes" wire:model="form.equifax.0.instruction_id" class="form-control">
+                        <select id="internalNotes" wire:model="equifax_instruction_id" class="form-control">
                             <option value="">--select--</option>
                             @forelse ($instructions as $instructionE)
                                 <option value="{{ $instructionE->id }}">{{ $instructionE->name }}</option>
@@ -102,7 +106,7 @@
                                 <option value="" disabled>no instruction</option>
                             @endforelse
                         </select>
-                        @error('form.equifax.0.instruction_id')
+                        @error('equifax_instruction_id')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -120,14 +124,13 @@
                     <!-- Bureau Status -->
                     <div class="mb-3">
                         <label class="form-label">Bureau Status:</label>
-                        <select wire:model="form.experian.1.bureau_status" class="form-control">
+                        <select wire:model="experian_bureau_status" class="form-control">
                             <option value="">--select--</option>
-                            <option value="Negative">Negative</option>
-                            <option value="Deleted">Deleted</option>
-                            <option value="Not reported">Not reported</option>
-                            <option value="do not process">Do not process</option>
+                            @foreach (\App\enum\BureauStatusEnum::values() as $bureau)
+                            <option value="{{ $bureau }}">{{ $bureau }}</option>
+                        @endforeach
                         </select>
-                        @error('form.experian.1.bureau_status')
+                        @error('experian_bureau_status')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -136,8 +139,8 @@
                     <div class="mb-3">
                         <label class="form-label">Item Name:</label>
                         <input type="text" class="form-control" id="experian-item_name" placeholder="Enter item name"
-                            wire:model="form.experian.1.item_name">
-                        @error('form.experian.1.item_name')
+                            wire:model="experian_item_name">
+                        @error('experian_item_name')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -145,13 +148,13 @@
                     <!-- Item Type -->
                     <div class="mb-3">
                         <label class="form-label">Item Type:</label>
-                        <select class="form-select" id="experian-item_type" wire:model="form.experian.1.item_type">
+                        <select class="form-select" id="experian-item_type" wire:model="experian_item_type">
                             <option value="">--Please select item type--</option>
                             @foreach (\App\enum\ItemTypeEnum::values() as $itemS)
                                 <option value="{{ $itemS }}">{{ $itemS }}</option>
                             @endforeach
                         </select>
-                        @error('form.experian.1.item_type')
+                        @error('experian_item_type')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -160,8 +163,8 @@
                     <div class="mb-3">
                         <label class="form-label">Account Number:</label>
                         <input type="text" class="form-control" id="experian-account_no"
-                            placeholder="Enter account number" wire:model="form.experian.1.account_no">
-                        @error('form.experian.1.account_no')
+                            placeholder="Enter account number" wire:model="experian_account_no">
+                        @error('experian_account_no')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -170,8 +173,8 @@
                     <div class="mb-3">
                         <label class="form-label">Open Date:</label>
                         <input type="date" class="form-control" id="experian-open_date"
-                            wire:model="form.experian.1.open_date">
-                        @error('form.experian.1.open_date')
+                            wire:model="experian_open_date">
+                        @error('experian_open_date')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -179,12 +182,12 @@
                     <!-- Status -->
                     <div class="mb-3">
                         <label class="form-label">Status:</label>
-                        <select class="form-control" id="experian-status" wire:model="form.experian.1.status">
+                        <select class="form-control" id="experian-status" wire:model="experian_status">
                             <option value="">Select status</option>
                             <option value="1">Active</option>
                             <option value="0">Inactive</option>
                         </select>
-                        @error('form.experian.1.status')
+                        @error('experian_status')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -192,7 +195,7 @@
                     <!-- Internal Notes -->
                     <div class="mb-3">
                         <label class="form-label">Internal Notes:</label>
-                        <select id="internalNotes" wire:model="form.experian.1.instruction_id" class="form-control">
+                        <select id="internalNotes" wire:model="experian_instruction_id" class="form-control">
                             <option value="">--select--</option>
                             @forelse ($instructions as $instructionEP)
                                 <option value="{{ $instructionEP->id }}">{{ $instructionEP->name }}</option>
@@ -200,7 +203,7 @@
                                 <option value="" disabled>no instruction</option>
                             @endforelse
                         </select>
-                        @error('form.experian.1.instruction_id')
+                        @error('experian_instruction_id')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -217,14 +220,13 @@
 
                     <!-- Bureau Status -->
                     <div class="d-flex">
-                        <select wire:model="form.transunion.2.bureau_status" class="form-control">
+                        <select wire:model="transunion_bureau_status" class="form-control">
                             <option value="">--select--</option>
-                            <option value="Negative">Negative</option>
-                            <option value="Deleted">Deleted</option>
-                            <option value="Not reported">Not reported</option>
-                            <option value="do not process">Do not process</option>
+                            @foreach (\App\enum\BureauStatusEnum::values() as $bureau)
+                            <option value="{{ $bureau }}">{{ $bureau }}</option>
+                        @endforeach
                         </select>
-                        @error('form.transunion.2.bureau_status')
+                        @error('transunion_bureau_status')
                             <div class="text-danger mt-1">{{ $message }}</div>
                         @enderror
                     </div>
@@ -233,8 +235,8 @@
                     <div class="mb-3">
                         <label class="form-label">Item Name:</label>
                         <input type="text" class="form-control" id="transunion-item_name"
-                            placeholder="Enter item name" wire:model="form.transunion.2.item_name">
-                        @error('form.transunion.2.item_name')
+                            placeholder="Enter item name" wire:model="transunion_item_name">
+                        @error('transunion_item_name')
                             <div class="text-danger mt-1">{{ $message }}</div>
                         @enderror
                     </div>
@@ -243,13 +245,13 @@
                     <div class="mb-3">
                         <label class="form-label">Item Type:</label>
                         <select class="form-select" id="transunion-item_name"
-                            wire:model="form.transunion.2.item_type">
+                            wire:model="transunion_item_type">
                             <option selected>--Please select item type--</option>
                             @foreach (\App\enum\ItemTypeEnum::values() as $itemT)
                                 <option value="{{ $itemT }}">{{ $itemT }}</option>
                             @endforeach
                         </select>
-                        @error('form.transunion.2.item_type')
+                        @error('transunion_item_type')
                             <div class="text-danger mt-1">{{ $message }}</div>
                         @enderror
                     </div>
@@ -258,8 +260,8 @@
                     <div class="mb-3">
                         <label class="form-label">Account Number:</label>
                         <input type="text" class="form-control" id="transunion-account_no"
-                            placeholder="Enter account number" wire:model="form.transunion.2.account_no">
-                        @error('form.transunion.2.account_no')
+                            placeholder="Enter account number" wire:model="transunion_account_no">
+                        @error('transunion_account_no')
                             <div class="text-danger mt-1">{{ $message }}</div>
                         @enderror
                     </div>
@@ -268,8 +270,8 @@
                     <div class="mb-3">
                         <label class="form-label">Open Date:</label>
                         <input type="date" class="form-control" id="transunion-open_date"
-                            placeholder="Enter date of last payment" wire:model="form.transunion.2.open_date">
-                        @error('form.transunion.2.open_date')
+                            placeholder="Enter date of last payment" wire:model="transunion_open_date">
+                        @error('transunion_open_date')
                             <div class="text-danger mt-1">{{ $message }}</div>
                         @enderror
                     </div>
@@ -277,12 +279,12 @@
                     <!-- Status -->
                     <div class="mb-3">
                         <label class="form-label">Status:</label>
-                        <select class="form-control" id="transunion-status" wire:model="form.transunion.2.status">
+                        <select class="form-control" id="transunion-status" wire:model="transunion_status">
                             <option value="">Select status</option>
                             <option value="1">Active</option>
                             <option value="0">Inactive</option>
                         </select>
-                        @error('form.transunion.2.status')
+                        @error('transunion_status')
                             <div class="text-danger mt-1">{{ $message }}</div>
                         @enderror
                     </div>
@@ -290,7 +292,7 @@
                     <!-- Internal Notes -->
                     <div class="mb-3">
                         <label class="form-label">Internal Notes:</label>
-                        <select id="internalNotes" wire:model="form.transunion.2.instruction_id"
+                        <select id="internalNotes" wire:model="transunion_instruction_id"
                             class="form-control">
                             <option value="">--select--</option>
                             @forelse ($instructions as $instructionT)
@@ -299,7 +301,7 @@
                                 <option value="" disabled>no instruction</option>
                             @endforelse
                         </select>
-                        @error('form.transunion.2.instruction_id')
+                        @error('transunion_instruction_id')
                             <div class="text-danger mt-1">{{ $message }}</div>
                         @enderror
                     </div>

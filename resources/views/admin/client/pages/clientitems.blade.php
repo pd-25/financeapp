@@ -1,7 +1,8 @@
 @extends('admin.client.edit')
 @section('clientcontent')
     <div class="card">
-        <livewire:client-item>
+        <livewire:client-item :clientId="$client->id">
+
     </div>
 @endsection
 @section('script')

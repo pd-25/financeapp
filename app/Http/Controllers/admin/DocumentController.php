@@ -53,7 +53,7 @@ class DocumentController extends Controller
             if ($store instanceof Document) {
                 return response()->json([
                     'status' => 'success',
-                    'toUrl' => route('client-documents.index', $client_slug),
+                    'toUrl' => route('client-documents.index', $findClient->id),
                     'msg' => $request?->first_name . 'Document Added Successfully..!',
                 ]);
             } else {

@@ -186,7 +186,7 @@
                         if (data.status === 'success') {
                             swal(data.msg, "", "success")
                                 .then(() => {
-                                    // window.location.href = data.toUrl;
+                                    window.location.href = data.toUrl;
                                     submitBtn.innerHTML = 'Submit';
                                     submitBtn.disabled = false;
                                 });
