@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 class Item extends Model
 {
-    protected $fillable = ["slug", "name", "client_id"];
+    protected $fillable = ["slug", "name", "client_id", "item_type"];
 
     /**
      * Boot the model.
@@ -36,5 +36,10 @@ class Item extends Model
         }
 
         return $slug;
+    }
+
+    public function itemDetails()
+    {
+        return $this->hasMany(ItemDetail::class, 'item_id', 'id');
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\DisputeLetterController;
 use App\Http\Controllers\admin\DocumentController;
 use App\Http\Controllers\admin\InstructionController;
 use App\Http\Controllers\admin\ItemController;
+use App\Http\Controllers\admin\LetterController;
 use App\Http\Controllers\admin\MonitoringInfoController;
 use App\Http\Controllers\admin\ReportSourceController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::delete('/client-documents/{client_slug}', [DocumentController::class, 'destroy'])->name('client-documents.destroy');
 
     Route::get('/client-items/{client_id}', [ItemController::class, 'index'])->name('client-items.index');
+    Route::get('/client-letters/{client_id}', [LetterController::class, 'index'])->name('client-letters.index');
     
     Route::get('log-out', [AuthController::class, 'adminLogout'])->name('admin.logout');
 });

@@ -29,7 +29,7 @@
                        href="{{route('client-items.index', $client?->id)}}">
                         <i class="bi bi-box-seam me-1"></i> Items
                     </a>
-                    <a class="nav-link text-uppercase fw-bold shadow-hover" href="#">
+                    <a class="nav-link {{Route::is('client-letters.index') ? 'active' : ''}} text-uppercase fw-bold shadow-hover" href="{{route('client-letters.index', $client?->id)}}">
                         <i class="bi bi-envelope-fill me-1"></i> Letter
                     </a>
                     <a class="nav-link {{Route::is('client-documents.index') ? 'active' : ''}} text-uppercase fw-bold shadow-hover" 

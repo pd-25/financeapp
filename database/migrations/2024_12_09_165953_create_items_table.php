@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('slug')->unique();
             $table->string("name")->nullable();
+            $table->string("item_type")->nullable();
+            $table->unsignedBigInteger('client_id');
+            $table->foreign('client_id')->references('id')->on('clients');
+            
             $table->timestamps();
         });
     }

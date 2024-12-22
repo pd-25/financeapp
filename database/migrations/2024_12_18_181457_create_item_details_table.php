@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('bureau_name');
             $table->string('bureau_status');
             $table->string('item_name');
-            $table->string('item_type');
+            $table->string('item_type')->default('N/A');
             $table->string('account_no');
             $table->date('open_date');
             $table->boolean('status')->default(1);
