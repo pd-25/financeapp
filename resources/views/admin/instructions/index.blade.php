@@ -88,7 +88,7 @@
                     @method('POST')
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addInstructionModalLabel">Add Report Source</h5>
+                        <h5 class="modal-title" id="addInstructionModalLabel">Add Instruction</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -136,7 +136,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editReportSourceLabel">Edit Report Source</h5>
+                <h5 class="modal-title" id="editReportSourceLabel">Edit instruction</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
