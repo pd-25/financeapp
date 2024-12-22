@@ -12,7 +12,7 @@
         <div class="col-8">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Edit Template</h5>
+                    <h5 class="card-title">Edit Report Source</h5>
                     <form action="{{ route('dispute-letters.update', $disputeletter->slug) }}" method="POST" enctype="multipart/form-data"
                         id="disputeletter-create">
                         @method('PUT')

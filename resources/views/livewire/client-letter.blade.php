@@ -3,9 +3,7 @@
 
         <div class="d-flex align-items-center mb-3 justify-content-between">
             <h5 class="card-title">Client Letters</h5>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Launch static backdrop modal
-              </button>
+            
             
             @if (Session::has('msg'))
                 <p id="flash-message" class="alert alert-info">{{ Session::get('msg') }}</p>
