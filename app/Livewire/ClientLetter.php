@@ -381,7 +381,7 @@ class ClientLetter extends Component
             // Remove the temporary file
             unlink($tempFile);
          } catch (\Exception $e) {
-            Log::error('PDF generation failed: ' . $e->getMessage());
+            Log::debug('PDF generation failed: ',[$e->getMessage()]);
             continue;
          }
 
