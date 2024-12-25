@@ -359,6 +359,8 @@ class ClientLetter extends Component
         
 
          try {
+            $data['body_html'] = mb_convert_encoding($data['body_html'], 'UTF-8', 'auto');
+
             $pdf = \PDF::loadHTML($data['body_html']);
             $pdfContent = $pdf->output();
 
