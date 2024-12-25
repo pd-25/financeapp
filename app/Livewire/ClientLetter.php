@@ -300,13 +300,13 @@ class ClientLetter extends Component
       $body = str_replace('contact_zipcode', $getClient->zipcode, $body);
 
       $body = str_replace('current_date', date('Y-m-d'), $body);
-      $body = str_replace('item_list', $getClient->first_name, $body);
-      $body = str_replace('item_list_with_instruction', $getClient->last_name, $body);
-      $body = str_replace('res_address', $recepAddress->address, $body);
-      $body = str_replace('street_address', $recepAddress->address, $body);
-      $body = str_replace('city', $recepAddress->city, $body);
-      $body = str_replace('state', $recepAddress->state, $body);
-      $body = str_replace('zipcode', $recepAddress->zipcode, $body);
+      $body = str_replace('recipient_item_list', $getClient->first_name, $body);
+      $body = str_replace('recipient_item_list_with_instruction', $getClient->last_name, $body);
+      $body = str_replace('recipient_res_address', $recepAddress->address, $body);
+      $body = str_replace('recipient_street_address', $recepAddress->address, $body);
+      $body = str_replace('recipient_city', $recepAddress->city, $body);
+      $body = str_replace('recipient_state', $recepAddress->state, $body);
+      $body = str_replace('recipient_zipcode', $recepAddress->zipcode, $body);
       return $body;
    }
    public function backToStepTwo()

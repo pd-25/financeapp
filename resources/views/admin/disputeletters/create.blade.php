@@ -114,8 +114,9 @@
                             <div class="card-body">
                                 <ul>
                                     @forelse (config('dispute_letters.recipient') as $kR => $receipnttLater)
+                                    {{-- @dump($kR,$receipnttLater) --}}
                                             <li class="accordion-item" data-value="{{ $receipnttLater }}">
-                                                {{ $kC }}
+                                               <span class="text-uppercase">{{str_replace('_', ' ', $kR)}}</span>
                                             </li>
                                     @empty
                                         <li>No items found.</li>
