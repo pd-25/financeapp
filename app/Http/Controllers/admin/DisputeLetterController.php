@@ -34,7 +34,7 @@ class DisputeLetterController extends Controller
         $request->validate([
             "name" => 'required|string',
             "description" => 'required|string|max:500',
-            "body" => 'required|string|max:4000',
+            "body" => 'required|string',
         ]);
         $data = $request->only("name", "description", "body");
         $store = DisputeLetters::create($data);

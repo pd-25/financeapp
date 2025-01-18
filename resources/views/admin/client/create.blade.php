@@ -62,8 +62,8 @@
 
                                 <div class="col-sm-4">
                                     <label for="inputText" class="col-sm-4 col-form-label">DOB</label>
-                                    <input type="date" name="dop" class="form-control">
-                                    @error('dop')
+                                    <input type="date" name="dob" class="form-control">
+                                    @error('dob')
                                         <span class="text-danger" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -72,7 +72,7 @@
 
                                 <div class="col-sm-4">
                                     <label for="inputText" class="col-sm-4 col-form-label">SSN</label>
-                                    <input type="text" name="ssn" class="form-control">
+                                    <input type="text" name="ssn" class="form-control" oninput="formatPhoneNumber(this, 'ssn')" placeholder="XXX-XX-XXXX">
                                     @error('ssn')
                                         <span class="text-danger" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -93,7 +93,8 @@
 
                                 <div class="col-sm-4">
                                     <label for="inputText" class="col-sm-4 col-form-label">Phone Number (Mobile)</label>
-                                    <input type="number" name="phone" class="form-control">
+                                    <input type="text" name="phone" class="form-control"  oninput="formatPhoneNumber(this, 'mobile')" 
+                                    placeholder="XXX-XXX-XXXX">
                                     @error('phone')
                                         <span class="text-danger" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -103,7 +104,7 @@
 
                                 <div class="col-sm-4">
                                     <label for="inputText" class="col-sm-4 col-form-label">Phone Number (Home)</label>
-                                    <input type="number" name="phone_home" class="form-control">
+                                    <input type="text" name="phone_home" class="form-control" oninput="formatPhoneNumber(this, 'mobile')" placeholder="XXX-XXX-XXXX">
                                     @error('phone_home')
                                         <span class="text-danger" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -113,7 +114,7 @@
 
                                 <div class="col-sm-4">
                                     <label for="inputText" class="col-sm-4 col-form-label">Phone Number (Work)</label>
-                                    <input type="number" name="phone_work" class="form-control">
+                                    <input type="text" name="phone_work" class="form-control" oninput="formatPhoneNumber(this, 'mobile')" placeholder="XXX-XXX-XXXX">
                                     @error('phone_work')
                                         <span class="text-danger" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -143,7 +144,15 @@
 
                                 <div class="col-sm-4">
                                     <label for="inputText" class="col-sm-4 col-form-label">State</label>
-                                    <input type="text" id="state" name="state" class="form-control">
+                                    {{-- <input type="text" id="state" name="state" class="form-control"> --}}
+                                    <select id="state" name="state" class="form-control">
+                                        <option value="">--select state--</option>
+                                        @foreach (config('states') as $statList)
+                                            <option value="{{ $statList }}">{{ $statList }}</option>
+                                        @endforeach
+                                    </select>
+
+
                                     @error('state')
                                         <span class="text-danger" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -161,7 +170,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-sm-12">
+                                {{-- <div class="col-sm-12">
                                     <label for="inputText" class="col-sm-1 col-form-label">Billing Address</label>
                                     <input id="same-billing-check" type="checkbox"
                                         onchange='handleChange(this);'><span>Same as Current Address</span>
@@ -207,18 +216,18 @@
                                         </span>
                                     @enderror
                                 </div>
-                            </div>
-                            {{--  --}}
+                            </div> --}}
+                                {{--  --}}
 
 
-                            <div class="row mb-3">
-                                <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-sm btn-primary float-end m-2"
-                                        id="submitBtn">Submit Form</button>
-                                    <a href="{{ route('clients.index') }}" type="submit"
-                                        class="btn btn-sm btn-danger float-end m-2">Cancel</a>
+                                <div class="row mb-3">
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-sm btn-primary float-end m-2"
+                                            id="submitBtn">Submit Form</button>
+                                        <a href="{{ route('clients.index') }}" type="submit"
+                                            class="btn btn-sm btn-danger float-end m-2">Cancel</a>
+                                    </div>
                                 </div>
-                            </div>
 
                         </form>
 

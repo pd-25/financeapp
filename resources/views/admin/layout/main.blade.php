@@ -13,7 +13,8 @@
 
     <!-- Add the custom styles here -->
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
             margin: 0;
             display: flex;
@@ -31,6 +32,7 @@
             position: relative;
             margin-top: auto;
         }
+
         #sidebar {
             background-color: #eee5e5
         }
@@ -55,7 +57,7 @@
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
-    
+
     <!-- Scripts -->
     <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -102,7 +104,67 @@
             }
         });
     </script>
+    <script>
+        // function formatPhoneNumber(input) {
+        //     console.log(input.value.length < 13);
+        //         const cursorPosition = input.selectionStart;
 
+        //         let value = input.value.replace(/\D/g, '');
+
+        //         if (value.length > 3 && value.length <= 6) {
+        //             value = value.replace(/^(\d{3})(\d+)/, '$1-$2');
+        //         } else if (value.length > 6) {
+        //             value = value.replace(/^(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+        //         }
+        //         const diff = value.length - input.value.length;
+        //         input.value = value;
+
+        //         input.setSelectionRange(cursorPosition + diff, cursorPosition + diff);
+        //     }
+        function formatPhoneNumber(input, fieldName) {
+            if (fieldName == "mobile") {
+                if (input.value.length > 12) {
+                    input.value = input.value.slice(0, 12);
+                    return;
+                }
+
+                const cursorPosition = input.selectionStart;
+
+                let value = input.value.replace(/\D/g, '');
+                if (value.length > 3 && value.length <= 6) {
+                    value = value.replace(/^(\d{3})(\d+)/, '$1-$2');
+                } else if (value.length > 6) {
+                    value = value.replace(/^(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+                }
+                const diff = value.length - input.value.length;
+                input.value = value;
+                input.setSelectionRange(cursorPosition + diff, cursorPosition + diff);
+            } else if (fieldName == "ssn") {
+                // Limit SSN input to 11 characters (3-2-4 format)
+                if (input.value.length > 10) {
+                    input.value = input.value.slice(0, 11);
+                    return;
+                }
+
+                const cursorPosition = input.selectionStart;
+
+                // Remove non-digit characters
+                let value = input.value.replace(/\D/g, '');
+                if (value.length > 3 && value.length <= 5) {
+                    value = value.replace(/^(\d{3})(\d+)/, '$1-$2');
+                } else if (value.length > 5) {
+                    value = value.replace(/^(\d{3})(\d{2})(\d+)/, '$1-$2-$3');
+                }
+
+                const diff = value.length - input.value.length;
+                input.value = value;
+                input.setSelectionRange(cursorPosition + diff, cursorPosition + diff);
+            }
+
+        }
+
+ 
+    </script>
     @yield('script')
     @livewireScripts
 </body>

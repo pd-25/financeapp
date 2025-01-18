@@ -176,8 +176,8 @@
                                                         
                                                     </select></td>
                                                 <td class="table-dropdown">
-                                                    <select class="form-control" wire:model="dispute_letter_selected_equifax">
-                                                      <option>--select--</option>
+                                                    <select class="form-control" wire:model="dispute_letter_selected_equifax" wire:change="syncTemplate">
+                                                      <option value="">--select--</option>
                                                         @forelse ($templates as $template)
                                                            <option value="{{$template->id}}">{{$template->name}}</option>
                                                        @empty
@@ -204,7 +204,7 @@
                                                     </select></td>
                                                 <td class="table-dropdown">
                                                     <select class="form-control" wire:model="dispute_letter_selected_experion">
-                                                      <option>--select--</option>
+                                                      <option value="">--select--</option>
                                                         @forelse ($templates as $templateE)
                                                            <option value="{{$templateE->id}}">{{$templateE->name}}</option>
                                                        @empty
@@ -230,7 +230,7 @@
                                                     </select></td>
                                                 <td class="table-dropdown">
                                                     <select class="form-control" wire:model="dispute_letter_selected_transunion">
-                                                      <option>--select--</option>
+                                                      <option value="">--select--</option>
                                                         @forelse ($templates as $templateT)
                                                            <option value="{{$templateT->id}}">{{$templateT->name}}</option>
                                                        @empty
@@ -247,6 +247,9 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                @if (Session::has('validation'))
+                                    <p id="alert-msg" class="alert alert-danger">{{ Session::get('validation') }}</p>
+                                @endif
                                 <button type="button" class="btn btn-primary prev-step"
                                     wire:click="backToStepOne">Previous</button>
                                 <button type="button" class="btn btn-primary next-step"
@@ -279,7 +282,7 @@
                                                 <td class="table-dropdown">
                                                     <a href="javascript:void(0)" wire:click="previewTemplate('{{\App\enum\BureauAddressNameEnum::EQUIFAX}}')">preview/edit</a>
                                                 <td>
-                                                    <input type="checkbox" wire:model="equfax_include_id" id="">
+                                                    <input type="checkbox" wire:model="equfax_include_id" id="" wire:change="syncIncludeId">
                                                     </td>
     
                                             </tr>
@@ -328,7 +331,7 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">Working on this</h5>
+              <h5 class="modal-title" id="staticBackdropLabel">Preview and edit</h5>
               <button type="button" wire:click="closeModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -353,7 +356,7 @@
                     <div class="d-flex align-items-center mb-3 justify-content-between">
                         {{-- <h5 class="card-title">Items List</h5> --}}
                         @if (Session::has('msg'))
-                            <p id="flash-message" class="alert alert-info">{{ Session::get('msg') }}</p>
+                            <p id="alert-msg" class="alert alert-info">{{ Session::get('msg') }}</p>
                         @endif
                        
                     </div>
@@ -365,7 +368,6 @@
                                 <th scope="col">Items</th>
                                 <th scope="col">Date Created</th>
                                 <th scope="col">Generated By</th>
-                                <th scope="col">View</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -381,10 +383,11 @@
                                     <td>{{ $laterList?->laterItemDetails->count()}}</td>
                                     <td> {{ \Carbon\Carbon::parse($laterList?->created_at)->isoFormat('Do MMMM YYYY') }}</td>
                                     <td>Admin</td>
-                                    <td><a href="{{asset('storage'. $laterList?->body_pdf)}}" target="_blank" rel="noopener noreferrer">Preview</a></td>
                                     <td>
                                         {{-- <a href="javascript:void(0)" wire:click="editLater('{{ $laterList->slug }}')"><i
                                                 class="ri-pencil-fill"></i></a> --}}
+                                                <a target="_blank" href="{{asset('storage'. $laterList?->body_pdf)}}" ><i
+                                                class="ri-eye-fill"></i></a>
                                                 <a href="javascript:void(0)" 
                                                     onclick="if(confirm('Are you sure you want to delete this?')) @this.call('deleteLater', '{{ $laterList->slug }}')"> 
                                                     <i class="ri-delete-bin-2-fill"></i>
@@ -436,6 +439,7 @@
             console.log('Summernote initialized with content.');
         }, 200);
     });
+    
 </script>
 @endscript
 

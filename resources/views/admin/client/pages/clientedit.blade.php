@@ -72,7 +72,7 @@
                             </div>
 
                             <div class="col-sm-4">
-                                <label for="inputText" class="col-sm-5 col-form-label">DOB</label>
+                                <label for="inputText" class="col-sm-5 col-form-label">DOB </label>
                                 <input type="date" name="dob" class="form-control"
                                     value="{{ $client->dob }}">
                                 @error('dob')
@@ -85,7 +85,7 @@
                             <div class="col-sm-4">
                                 <label for="inputText" class="col-sm-5 col-form-label">SSN</label>
                                 <input type="text" name="ssn" class="form-control"
-                                    value="{{ $client->ssn }}">
+                                    value="{{ $client->ssn }}" oninput="formatPhoneNumber(this, 'ssn')" >
                                 @error('ssn')
                                     <span class="text-danger" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -108,8 +108,8 @@
                             <div class="col-sm-4">
                                 <label for="inputText" class="col-sm-5 col-form-label">Phone Number
                                     (Mobile)</label>
-                                <input type="number" name="phone" class="form-control"
-                                    value="{{ $client->phone }}">
+                                <input type="text" name="phone" class="form-control"
+                                    value="{{ $client->phone }}" oninput="formatPhoneNumber(this)">
                                 @error('phone')
                                     <span class="text-danger" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -120,8 +120,8 @@
                             <div class="col-sm-4">
                                 <label for="inputText" class="col-sm-5 col-form-label">Phone Number
                                     (Home)</label>
-                                <input type="number" name="phone_home" class="form-control"
-                                    value="{{ $client->phone_home }}">
+                                <input type="text" name="phone_home" class="form-control"
+                                    value="{{ $client->phone_home }}" oninput="formatPhoneNumber(this, 'mobile')" >
                                 @error('phone_home')
                                     <span class="text-danger" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -132,8 +132,8 @@
                             <div class="col-sm-4">
                                 <label for="inputText" class="col-sm-5 col-form-label">Phone Number
                                     (Work)</label>
-                                <input type="number" name="phone_work" class="form-control"
-                                    value="{{ $client->phone_work }}">
+                                <input type="text" name="phone_work" class="form-control"
+                                    value="{{ $client->phone_work }}" oninput="formatPhoneNumber(this, 'mobile')" >
                                 @error('phone_work')
                                     <span class="text-danger" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -166,8 +166,14 @@
 
                             <div class="col-sm-4">
                                 <label for="inputText" class="col-sm-5 col-form-label">State</label>
-                                <input type="text" name="state" class="form-control"
-                                    value="{{ $client->state }}">
+                                {{-- <input type="text" name="state" class="form-control"
+                                    value="{{ $client->state }}"> --}}
+                                    <select id="state" name="state" class="form-control">
+                                        <option value="">--select state--</option>
+                                        @foreach (config('states') as $key => $statList)
+                                            <option value="{{ $statList }}" {{$client->state == $statList ? 'selected' : ''}}>{{ $statList }}</option>
+                                        @endforeach
+                                    </select>
                                 @error('state')
                                     <span class="text-danger" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -187,7 +193,7 @@
                             </div>
 
 
-                            <div class="col-sm-12">
+                            {{-- <div class="col-sm-12">
                                 <label for="inputText" class="col-sm-5 col-form-label">Current
                                     Address</label>
                                 <input type="text" name="billing_address" class="form-control"
@@ -231,7 +237,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
                         {{--  --}}
 
 

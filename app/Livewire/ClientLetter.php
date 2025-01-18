@@ -83,7 +83,7 @@ class ClientLetter extends Component
 
    private function fetchLatersWithDetails()
    {
-      return Later::with(['laterItemDetails' ])
+      return Later::with(['laterItemDetails'])
          ->where('client_id', $this->clientId)
          ->orderBy('id', 'DESC')
          ->get();
@@ -247,11 +247,16 @@ class ClientLetter extends Component
 
    public function goToStepThree()
    {
-      $this->stepTwo = false;
-      $this->stepThree = true;
-      $this->makeLeterBody('Equifax');
-      $this->makeLeterBody('Experian');
-      $this->makeLeterBody('Transunion');
+      if ($this->dispute_letter_selected_transunion && $this->dispute_letter_selected_experion && $this->dispute_letter_selected_equifax) {
+         $this->stepTwo = false;
+         $this->stepThree = true;
+         $this->makeLeterBody('Equifax');
+         $this->makeLeterBody('Experian');
+         $this->makeLeterBody('Transunion');
+      }else{
+         session()->flash('validation', 'Please fill all the fields');
+      }
+
 
       // }
       // dd($this->address_selected_equifax, $this->dispute_letter_selected_equifax, $this->address_selected_experion, $this->dispute_letter_selected_experion, $this->address_selected_transunion, $this->dispute_letter_selected_transunion, $this->selectedItemOtherDetailsTrans);
@@ -356,7 +361,7 @@ class ClientLetter extends Component
             $data['include_docs'] = $this->transunion_include_id ?? 0;
             $laterItems['item_detail_id'] = array_merge($this->selectedItemOtherDetailsTrans, $this->selectedItemCollDetailsTrans);
          }
-        
+
 
          try {
             // $data['body_html'] = mb_convert_encoding($data['body_html'], 'UTF-8', 'auto');
@@ -383,7 +388,7 @@ class ClientLetter extends Component
             // Remove the temporary file
             unlink($tempFile);
          } catch (\Exception $e) {
-            Log::debug('PDF generation failed: ',[$e->getMessage()]);
+            Log::debug('PDF generation failed: ', [$e->getMessage()]);
             continue;
          }
 
@@ -397,7 +402,7 @@ class ClientLetter extends Component
             ]);
          }
       }
-      $this->resetForm();
+      // $this->resetForm();
       $this->toggleForm();
       session()->flash('msg', 'Later saved successfully.');
       $this->fetchLatersWithDetails();
@@ -426,11 +431,22 @@ class ClientLetter extends Component
       $this->backToStepOne();
    }
 
-   public function deleteLater($laterslug){
+   public function deleteLater($laterslug)
+   {
       $findLater = Later::where('slug', $laterslug)->first();
       $findLater->laterItemDetails()->delete();
       $findLater->delete();
       session()->flash('msg', 'Later deleted successfully.');
       $this->fetchLatersWithDetails();
+   }
+
+   public function syncTemplate()
+   {
+      $this->dispute_letter_selected_transunion = $this->dispute_letter_selected_experion = $this->dispute_letter_selected_equifax;
+   }
+
+   public function syncIncludeId()
+   {
+      $this->transunion_include_id = $this->experion_include_id = $this->equfax_include_id;
    }
 }

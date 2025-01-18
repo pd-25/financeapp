@@ -24,11 +24,13 @@ class ClientItem extends Component
         return view('livewire.client-item', $data);
     }
 
-    public function mount(){
+    public function mount()
+    {
         $this->itemlists = $this->fetchItemsWithDetails();
     }
 
-    private function fetchItemsWithDetails(){
+    private function fetchItemsWithDetails()
+    {
         return Item::with('itemDetails')->where('client_id', $this->clientId)->orderBy('id', 'DESC')->get();
     }
 
@@ -40,23 +42,23 @@ class ClientItem extends Component
     public function editItem($itemSlug)
     {
         $item = $this->getItem($itemSlug);
-    
+
         // Ensure item exists
         if (!$item) {
             session()->flash('error', 'Item not found.');
             return;
         }
-    
+
         // Assign the item and its details to the component's properties
         $this->clientId = $item->client_id; // Set the client ID if needed
         $this->formVisible = true; // Open the form for editing
         $this->item_type = $item->item_type;
-    
+
         // Populate form fields for each bureau dynamically
         $bureaus = ['Equifax', 'Experian', 'Transunion'];
         foreach ($bureaus as $bureau) {
             $detail = $item->itemDetails->firstWhere('bureau_name', $bureau);
-    
+
             if ($detail) {
                 $this->{$bureau . '_bureau_status'} = $detail->bureau_status;
                 $this->{$bureau . '_item_name'} = $detail->item_name;
@@ -77,21 +79,22 @@ class ClientItem extends Component
             }
         }
 
-        if(!$this->formVisible){
+        if (!$this->formVisible) {
             $this->formVisible = true;
         }
         $this->itemId = $item->id;
     }
-    
 
-    private function getItem($itemSlug){
+
+    private function getItem($itemSlug)
+    {
         return Item::with('itemDetails')->where('slug', $itemSlug)->first();
     }
 
     public function save()
     {
         return DB::transaction(function () {
-          
+
             $this->validate([
 
                 'item_type' => 'required|in:' . implode(',', ItemTypeEnum::values()),
@@ -103,7 +106,7 @@ class ClientItem extends Component
                 'Equifax_open_date' => 'required|date',
                 'Equifax_status' => 'required',
                 'Equifax_instruction_id' => 'required|exists:instructions,id',
-    
+
                 'Experian_bureau_status' => 'required|in:' . implode(',', BureauStatusEnum::values()),
                 'Experian_item_name' => 'required|string|max:255',
                 // 'Experian_item_type' => 'required|in:' . implode(',', ItemTypeEnum::values()),
@@ -111,7 +114,7 @@ class ClientItem extends Component
                 'Experian_open_date' => 'required|date',
                 'Experian_status' => 'required',
                 'Experian_instruction_id' => 'required|exists:instructions,id',
-    
+
                 'Transunion_bureau_status' => 'required|in:' . implode(',', BureauStatusEnum::values()),
                 'Transunion_item_name' => 'required|string|max:255',
                 // 'Transunion_item_type' => 'required|in:' . implode(',', ItemTypeEnum::values()),
@@ -130,16 +133,16 @@ class ClientItem extends Component
 
             if (isset($this->itemId)) {
                 $item = Item::find($this->itemId);
-    
+
                 if (!$item) {
                     session()->flash('error', 'Item not found.');
                     return;
                 }
-    
+
                 // Update existing item details
                 foreach ($bureaus as $bureau) {
                     $detail = $item->itemDetails->firstWhere('bureau_name', $bureau);
-    
+
                     if ($detail) {
                         $detail->update([
                             'bureau_status' => $this->{$bureau . '_bureau_status'},
@@ -155,43 +158,35 @@ class ClientItem extends Component
                 session()->flash('msg', 'Client items updated successfully.');
             } else {
 
-            $item = Item::create(['name' => 'Random Name ' . uniqid(), 'client_id' => $this->clientId, 'item_type' => $this->item_type]);
+                $item = Item::create(['name' => 'Random Name ' . uniqid(), 'client_id' => $this->clientId, 'item_type' => $this->item_type]);
 
-            // Save data for each bureau dynamically
-            foreach ($bureaus as $bureau) {
-                ItemDetail::create([
-                    'bureau_name' => $bureau,
-                    'bureau_status' => $this->{$bureau . '_bureau_status'},
-                    'item_name' => $this->{$bureau . '_item_name'},
-                    // 'item_type' => $this->{$bureau . '_item_type'},
-                    'account_no' => $this->{$bureau . '_account_no'},
-                    'open_date' => $this->{$bureau . '_open_date'},
-                    'status' => $this->{$bureau . '_status'},
-                    'instruction_id' => $this->{$bureau . '_instruction_id'},
-                    'item_id' => $item->id
-                ]);
+                // Save data for each bureau dynamically
+                foreach ($bureaus as $bureau) {
+                    ItemDetail::create([
+                        'bureau_name' => $bureau,
+                        'bureau_status' => $this->{$bureau . '_bureau_status'},
+                        'item_name' => $this->{$bureau . '_item_name'},
+                        // 'item_type' => $this->{$bureau . '_item_type'},
+                        'account_no' => $this->{$bureau . '_account_no'},
+                        'open_date' => $this->{$bureau . '_open_date'},
+                        'status' => $this->{$bureau . '_status'},
+                        'instruction_id' => $this->{$bureau . '_instruction_id'},
+                        'item_id' => $item->id
+                    ]);
+                }
+                session()->flash('msg', 'Client items saved successfully.');
             }
-            session()->flash('msg', 'Client items saved successfully.');
-        }
 
             // Reset form fields
             $this->resetForm();
             $this->toggleForm();
             $this->itemlists = $this->fetchItemsWithDetails();
             // Display success message
-            
+
 
         });
     }
 
-
-    public function syncItemName($index)
-    {
-        if (isset($this->form['equifax'][$index]['item_name'])) {
-
-            $this->form['experian'][0]['item_name'] = $this->form['equifax'][$index]['item_name'];
-        }
-    }
     private function resetForm()
     {
         $this->Equifax_bureau_status = $this->equifax_item_name = $this->item_type = $this->equifax_account_no = $this->equifax_open_date = $this->equifax_status = $this->equifax_instruction_id = '';
@@ -199,23 +194,65 @@ class ClientItem extends Component
         $this->Transunion_bureau_status = $this->transunion_item_name = $this->item_type = $this->transunion_account_no = $this->transunion_open_date = $this->transunion_status = $this->transunion_instruction_id = '';
     }
 
+    public function syncBureauStatus()
+    {
+        if (!$this->itemId) {
+            $this->Experian_bureau_status = $this->Transunion_bureau_status = $this->Equifax_bureau_status;
+        }
+    }
+
+    public function syncItemName()
+    {
+        if (!$this->itemId) {
+            $this->Experian_item_name = $this->Transunion_item_name = $this->Equifax_item_name;
+        }
+    }
+
+    public function syncAccountNo()
+    {
+        if (!$this->itemId) {
+            $this->Transunion_account_no = $this->Experian_account_no = $this->Equifax_account_no;
+        }
+    }
+
+    public function syncOpenDate()
+    {
+        if (!$this->itemId) {
+            $this->Transunion_open_date = $this->Experian_open_date = $this->Equifax_open_date;
+        }
+    }
+
+    public function syncStatus()
+    {
+        if (!$this->itemId) {
+            $this->Transunion_status = $this->Experian_status = $this->Equifax_status;
+        }
+    }
+
+    public function syncInstruction()
+    {
+        if (!$this->itemId) {
+            $this->Transunion_instruction_id = $this->Experian_instruction_id = $this->Equifax_instruction_id;
+        }
+    }
 
 
-      // Define common fields for validation
-            // $commonValidationFields = [
-            //     'bureau_status' => 'required|in:' . implode(',', BureauStatusEnum::values()),
-            //     'item_name' => 'required|string|max:255',
-            //     'item_type' => 'required|in:' . implode(',', ItemTypeEnum::values()),
-            //     'account_no' => 'required',
-            //     'open_date' => 'required|date',
-            //     'status' => 'required',
-            //     'instruction_id' => 'required|exists:instructions,id',
-            // ];
 
-            // // Define validation rules for all bureaus
-            // $this->validate([
-            //     'equifax_' . key($commonValidationFields) => $commonValidationFields,
-            //     'experian_' . key($commonValidationFields) => $commonValidationFields,
-            //     'transunion_' . key($commonValidationFields) => $commonValidationFields,
-            // ]);
+    // Define common fields for validation
+    // $commonValidationFields = [
+    //     'bureau_status' => 'required|in:' . implode(',', BureauStatusEnum::values()),
+    //     'item_name' => 'required|string|max:255',
+    //     'item_type' => 'required|in:' . implode(',', ItemTypeEnum::values()),
+    //     'account_no' => 'required',
+    //     'open_date' => 'required|date',
+    //     'status' => 'required',
+    //     'instruction_id' => 'required|exists:instructions,id',
+    // ];
+
+    // // Define validation rules for all bureaus
+    // $this->validate([
+    //     'equifax_' . key($commonValidationFields) => $commonValidationFields,
+    //     'experian_' . key($commonValidationFields) => $commonValidationFields,
+    //     'transunion_' . key($commonValidationFields) => $commonValidationFields,
+    // ]);
 }

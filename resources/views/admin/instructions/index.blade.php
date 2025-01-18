@@ -35,7 +35,7 @@
                                         <th scope="row">{{ $startIndex++ }}</th>
                                         <td>{{ $instruction?->name }}
                                         </td>
-                                        <td>{{$instruction?->instruction}}</td>
+                                        <td>{{Str::limit($instruction?->instruction, 100, '...')}}</td>
                                         <td> {{ \Carbon\Carbon::parse($instruction?->created_at)->isoFormat('Do MMMM YYYY') }}
                                         </td>
 
