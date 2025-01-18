@@ -81,7 +81,7 @@
                                 </div>
 
                                 <div class="col-sm-12">
-                                    <label for="inputText" class="col-sm-1 col-form-label">Receive Email
+                                    <label for="inputText" class="col-sm-3 col-form-label">Receive Email
                                         Notification</label>
                                     <input type="checkbox" name="is_notify_email" value="1">
                                     @error('is_notify_email')
@@ -92,7 +92,7 @@
                                 </div>
 
                                 <div class="col-sm-4">
-                                    <label for="inputText" class="col-sm-4 col-form-label">Phone Number (Mobile)</label>
+                                    <label for="inputText" class="col-sm-6 col-form-label">Phone Number (Mobile)</label>
                                     <input type="text" name="phone" class="form-control"  oninput="formatPhoneNumber(this, 'mobile')" 
                                     placeholder="XXX-XXX-XXXX">
                                     @error('phone')
@@ -103,7 +103,7 @@
                                 </div>
 
                                 <div class="col-sm-4">
-                                    <label for="inputText" class="col-sm-4 col-form-label">Phone Number (Home)</label>
+                                    <label for="inputText" class="col-sm-6 col-form-label">Phone Number (Home)</label>
                                     <input type="text" name="phone_home" class="form-control" oninput="formatPhoneNumber(this, 'mobile')" placeholder="XXX-XXX-XXXX">
                                     @error('phone_home')
                                         <span class="text-danger" role="alert">
@@ -113,7 +113,7 @@
                                 </div>
 
                                 <div class="col-sm-4">
-                                    <label for="inputText" class="col-sm-4 col-form-label">Phone Number (Work)</label>
+                                    <label for="inputText" class="col-sm-6 col-form-label">Phone Number (Work)</label>
                                     <input type="text" name="phone_work" class="form-control" oninput="formatPhoneNumber(this, 'mobile')" placeholder="XXX-XXX-XXXX">
                                     @error('phone_work')
                                         <span class="text-danger" role="alert">
