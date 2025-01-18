@@ -155,7 +155,16 @@
                                             <tr>
                                                 <th>Bureau </th>
                                                 <th>Address </th>
-                                                <th>Template </th>
+                                                <th>
+                                                    <select class="form-control" wire:model="dispute_letter_selected_master" wire:change="syncTemplate">
+                                                        <option value="">SELECT TEMPLATE</option>
+                                                          @forelse ($templates as $template)
+                                                             <option value="{{$template->id}}">{{$template->name}}</option>
+                                                         @empty
+                                                             <option disabled>not found</option>
+                                                         @endforelse
+                                                      </select></td>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -176,7 +185,7 @@
                                                         
                                                     </select></td>
                                                 <td class="table-dropdown">
-                                                    <select class="form-control" wire:model="dispute_letter_selected_equifax" wire:change="syncTemplate">
+                                                    <select class="form-control" wire:model="dispute_letter_selected_equifax">
                                                       <option value="">--select--</option>
                                                         @forelse ($templates as $template)
                                                            <option value="{{$template->id}}">{{$template->name}}</option>
@@ -269,7 +278,7 @@
                                             <tr>
                                                 <th>Recipient </th>
                                                 <th>Preview/Edit </th>
-                                                <th>Include ID Docs </th>
+                                                <th>Include ID Docs <input type="checkbox" wire:model="master_include_id" wire:change="syncIncludeId"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -282,7 +291,7 @@
                                                 <td class="table-dropdown">
                                                     <a href="javascript:void(0)" wire:click="previewTemplate('{{\App\enum\BureauAddressNameEnum::EQUIFAX}}')">preview/edit</a>
                                                 <td>
-                                                    <input type="checkbox" wire:model="equfax_include_id" id="" wire:change="syncIncludeId">
+                                                    <input type="checkbox" wire:model="equfax_include_id" id="" >
                                                     </td>
     
                                             </tr>

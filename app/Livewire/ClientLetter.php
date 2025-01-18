@@ -43,6 +43,7 @@ class ClientLetter extends Component
    public $address_selected_equifax, $dispute_letter_selected_equifax, $address_selected_experion, $dispute_letter_selected_experion, $address_selected_transunion, $dispute_letter_selected_transunion;
    public $leterBodyEquiFax, $leterBodyExperian, $leterBodyTransunion;
    public $transunion_include_id, $experion_include_id, $equfax_include_id;
+   public $dispute_letter_selected_master, $master_include_id;
 
    public function render()
    {
@@ -442,11 +443,11 @@ class ClientLetter extends Component
 
    public function syncTemplate()
    {
-      $this->dispute_letter_selected_transunion = $this->dispute_letter_selected_experion = $this->dispute_letter_selected_equifax;
+      $this->dispute_letter_selected_transunion = $this->dispute_letter_selected_experion = $this->dispute_letter_selected_equifax = $this->dispute_letter_selected_master;
    }
 
    public function syncIncludeId()
    {
-      $this->transunion_include_id = $this->experion_include_id = $this->equfax_include_id;
+      $this->transunion_include_id = $this->experion_include_id = $this->equfax_include_id = $this->master_include_id;
    }
 }
