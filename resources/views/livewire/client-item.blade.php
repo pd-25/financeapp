@@ -3,7 +3,7 @@
         <div class="card-body">
 
             <div class="d-flex align-items-center mb-3 justify-content-between">
-                <h5 class="card-title">Client Items</h5>
+                <h5 class="card-title">{{$clientDetails?->first_name . ' '.$clientDetails?->middle_name.' '.$clientDetails?->last_name."'s"}} Items</h5>
                 @if (Session::has('msg'))
                     <p id="flash-message" class="alert alert-info">{{ Session::get('msg') }}</p>
                 @endif

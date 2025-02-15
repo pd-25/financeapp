@@ -42,4 +42,9 @@ class Item extends Model
     {
         return $this->hasMany(ItemDetail::class, 'item_id', 'id');
     }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, "client_id", 'id');
+    }
 }

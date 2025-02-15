@@ -2,7 +2,7 @@
 @section('clientcontent')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Client Documents</h5>
+            <h5 class="card-title"> {{$client?->first_name . ' '.$client?->middle_name.' '.$client?->last_name."'s"}} Documents</h5>
             @if (Session::has('msg'))
                 <p id="flash-message" class="alert alert-info">{{ Session::get('msg') }}</p>
             @endif

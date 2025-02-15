@@ -14,6 +14,7 @@ class ClientItem extends Component
 {
     public $formVisible = false;
     public $itemlists = [];
+    public $clientDetails;
     public $clientId, $itemId, $item_type;
     public  $Equifax_bureau_status, $Equifax_item_name, $Equifax_account_no, $Equifax_open_date, $Equifax_status, $Equifax_instruction_id;
     public  $Experian_bureau_status, $Experian_item_name, $Experian_account_no, $Experian_open_date, $Experian_status, $Experian_instruction_id;

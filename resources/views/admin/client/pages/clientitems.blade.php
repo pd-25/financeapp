@@ -1,7 +1,7 @@
 @extends('admin.client.edit')
 @section('clientcontent')
     
-        <livewire:client-item :clientId="$client->id">
+        <livewire:client-item :clientId="$client->id" :clientDetails="$client" />
 
     
 @endsection

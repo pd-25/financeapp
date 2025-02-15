@@ -19,7 +19,7 @@ class ClientLetter extends Component
    public $stepOne = true;
    public $stepTwo = false;
    public $stepThree = false;
-   public $clientId;
+   public $clientId, $clientDetails;
    public $oldTemplateIId;
 
    public $master_Equifax_original = false;

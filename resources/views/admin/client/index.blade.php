@@ -12,8 +12,17 @@
                         @if (Session::has('msg'))
                             <p id="flash-message" class="alert alert-info">{{ Session::get('msg') }}</p>
                         @endif
-                        <a class="btn btn-sm btn-outline-success float-end" href="{{ route('clients.create') }}">Add Clients</a>
-                
+                        {{-- <a class="btn btn-sm btn-outline-success float-end" href="{{ route('clients.create') }}">Add Clients</a> --}}
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <form action="{{ route('clients.index') }}" method="GET" class="d-flex" style="width: 50%;">
+                                <input type="text" name="search" class="form-control me-2" placeholder="Search by name, email, or phone" value="{{ request('search') }}">
+                                <button type="submit" class="btn btn-outline-primary me-2">Search</button>
+                                @if (request('search'))
+                                    <a href="{{ route('clients.index') }}" class="btn btn-outline-danger"> Clear</a>
+                                @endif
+                            </form>
+                            <a class="btn btn-sm btn-outline-success" href="{{ route('clients.create') }}">Add Clients</a>
+                        </div>
                         <table class="table">
                             <thead>
                                 <tr>

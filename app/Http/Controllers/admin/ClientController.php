@@ -12,12 +12,25 @@ class ClientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = Client::query();
+    
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('first_name', 'LIKE', "%$search%")
+                  ->orWhere('last_name', 'LIKE', "%$search%")
+                  ->orWhere('email', 'LIKE', "%$search%")
+                  ->orWhere('phone', 'LIKE', "%$search%");
+            });
+        }
+    
         return view('admin.client.index', [
-            'clients' => Client::orderByDesc('id')->paginate(10),
+            'clients' => $query->orderByDesc('id')->paginate(10),
         ]);
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -35,7 +48,7 @@ class ClientController extends Controller
         $request->validate([
             'first_name' => 'required|string|max:250',
             'last_name' => 'required|string|max:250',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:clients',
         ]);
         $data = $request->only('first_name', 'middle_name', 'last_name', 'email', 'is_notify_email', 'dob', 'ssn', 'phone', 'phone_home', 'phone_work', 'current_address', 'city', 'state', 'zipcode', 'billing_address', 'billing_city', 'billing_state', 'billing_zipcode', 'occupation', 'anual_income');
         $store = Client::create($data);
@@ -43,7 +56,7 @@ class ClientController extends Controller
             return response()->json([
                 'status' => 'success',
                 'toUrl' => route('clients.index'),
-                'msg' => $request?->first_name . 'Client Added Successfully..!',
+                'msg' => $request?->first_name . ' Client Added Successfully..!',
             ]);
         } else {
             return back()->with('msg', 'Some error occur..');

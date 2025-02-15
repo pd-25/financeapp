@@ -3,10 +3,7 @@
         <div class="card-body">
     
             <div class="d-flex align-items-center mb-3 justify-content-between">
-                <h5 class="card-title">Client Letters</h5>
-                
-                
-                
+                <h5 class="card-title">{{$clientDetails?->first_name . ' '.$clientDetails?->middle_name.' '.$clientDetails?->last_name."'s"}} Letters</h5>
                 <a href="javascript:void(0)" wire:click="toggleForm">
                     <u> <span id="add-hide-btn">{{ $formVisible ? 'Hide Letter Form' : 'Add Letter Form' }}</span></u>
                 </a>

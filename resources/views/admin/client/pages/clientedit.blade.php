@@ -2,7 +2,7 @@
 @section('clientcontent')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Client Information</h5>
+            <h5 class="card-title">{{$client?->first_name . ' '.$client?->middle_name.' '.$client?->last_name."'s"}} Information</h5>
             <div class="d-flex align-items-start">
                 <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
