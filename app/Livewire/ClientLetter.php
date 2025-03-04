@@ -11,6 +11,7 @@ use App\Models\DisputeLetters;
 use App\Models\Item;
 use App\Models\Later;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class ClientLetter extends Component
@@ -29,6 +30,7 @@ class ClientLetter extends Component
    public $master_Equifax_collections = false;
    public $master_Experian_collections = false;
    public $master_TransUnion_collections = false;
+   public $currentEditSlug = null;
 
    // Selected child checkboxes
    public $selectedItemOtherDetailsEqFax = [];
@@ -217,6 +219,16 @@ class ClientLetter extends Component
       }
    }
 
+   public function editLater($laterSlug)
+   {
+      $laterBody = Later::select('body_html', 'slug')->where('slug', $laterSlug)->first();
+      $this->bureauBody = $laterBody->body_html;
+      $this->openModal = true;
+      $this->dispatch('modalOpened');
+      $this->class = 'show';
+      $this->currentEditSlug = $laterSlug;
+   }
+
    public function closeModal()
    {
       $this->openModal = false;
@@ -254,7 +266,7 @@ class ClientLetter extends Component
          $this->makeLeterBody('Equifax');
          $this->makeLeterBody('Experian');
          $this->makeLeterBody('Transunion');
-      }else{
+      } else {
          session()->flash('validation', 'Please fill all the fields');
       }
 
@@ -313,6 +325,8 @@ class ClientLetter extends Component
       $body = str_replace('recipient_city', $recepAddress->city, $body);
       $body = str_replace('recipient_state', $recepAddress->state, $body);
       $body = str_replace('recipient_zipcode', $recepAddress->zipcode, $body);
+      $body = str_replace('recipient_name', $recepAddress->name, $body);
+      
       return $body;
    }
    public function backToStepTwo()
@@ -325,15 +339,42 @@ class ClientLetter extends Component
 
    public function updateBody()
    {
-      if ($this->currentModal == BureauAddressNameEnum::EQUIFAX) {
-         $this->leterBodyEquiFax = $this->bureauBody;
+      if ($this->currentEditSlug) {
+         $later = Later::where('slug', $this->currentEditSlug)->first();
+
+         if ($later->body_pdf && Storage::disk('public')->exists($later->body_pdf)) {
+            Storage::disk('public')->delete($later->body_pdf);
+         }
+         $pdf = \PDF::loadHTML($this->bureauBody);
+         $pdfContent = $pdf->output();
+         $tempFile = tempnam(sys_get_temp_dir(), 'pdf');
+         file_put_contents($tempFile, $pdfContent);
+         $uploadedFile = new \Illuminate\Http\UploadedFile(
+            $tempFile,
+            time() . rand(0000, 9999) . '.pdf',
+            'application/pdf',
+            null,
+            true
+         );
+         $data['body_pdf'] = $this->uploadImage($uploadedFile);
+         unlink($tempFile);
+         $later->update([
+            'body_html' => $this->bureauBody,
+            'body_pdf' => $data['body_pdf']
+         ]);
+         session()->flash('msg', 'Later updated successfully.');
+      } else {
+         if ($this->currentModal == BureauAddressNameEnum::EQUIFAX) {
+            $this->leterBodyEquiFax = $this->bureauBody;
+         }
+         if ($this->currentModal == BureauAddressNameEnum::EXPERIAN) {
+            $this->leterBodyExperian = $this->bureauBody;
+         }
+         if ($this->currentModal == BureauAddressNameEnum::TRANSUNION) {
+            $this->leterBodyTransunion = $this->bureauBody;
+         }
       }
-      if ($this->currentModal == BureauAddressNameEnum::EXPERIAN) {
-         $this->leterBodyExperian = $this->bureauBody;
-      }
-      if ($this->currentModal == BureauAddressNameEnum::TRANSUNION) {
-         $this->leterBodyTransunion = $this->bureauBody;
-      }
+
       $this->closeModal();
    }
 

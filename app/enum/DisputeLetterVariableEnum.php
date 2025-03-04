@@ -23,6 +23,7 @@ class DisputeLetterVariableEnum
     const RECIPIENT_CITY = 'recipient_city';
     const RECIPIENT_STATE = 'recipient_state';
     const RECIPIENT_ZIPCODE = 'recipient_zipcode';
+    const RECIPIENT_NAME = 'recipient_name';
     
 
 

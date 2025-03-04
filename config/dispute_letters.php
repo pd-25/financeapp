@@ -22,5 +22,6 @@ return [
         'city' => 'recipient_city',
         'state' => 'recipient_state',
         'zipcode' => 'recipient_zipcode',
+        'name' => 'recipient_name',
     ],
 ];

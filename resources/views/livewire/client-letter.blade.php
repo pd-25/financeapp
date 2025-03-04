@@ -390,8 +390,8 @@
                                     <td> {{ \Carbon\Carbon::parse($laterList?->created_at)->isoFormat('Do MMMM YYYY') }}</td>
                                     <td>Admin</td>
                                     <td>
-                                        {{-- <a href="javascript:void(0)" wire:click="editLater('{{ $laterList->slug }}')"><i
-                                                class="ri-pencil-fill"></i></a> --}}
+                                        <a href="javascript:void(0)" wire:click="editLater('{{ $laterList->slug }}')"><i
+                                                class="ri-pencil-fill"></i></a>
                                                 <a target="_blank" href="{{asset('storage'. $laterList?->body_pdf)}}" ><i
                                                 class="ri-eye-fill"></i></a>
                                                 <a href="javascript:void(0)" 
