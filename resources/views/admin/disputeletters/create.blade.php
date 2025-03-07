@@ -80,23 +80,12 @@
                             <div class="card-body">
                                 <ul>
                                     @forelse (config('dispute_letters.contact') as $kC => $contactLater)
-                                            <li class="accordion-item" data-value="{{ $contactLater }}">{{ str_replace('_', ' ', $kC) }}
-                                            </li>
+                                        <li class="accordion-item" data-value="{{ $contactLater }}">
+                                            {{ str_replace('_', ' ', $kC) }}
+                                        </li>
                                     @empty
                                         <li>No items found.</li>
                                     @endforelse
-                                   
-
-                                    {{-- <li class="accordion-item" data-value="contact_first_name">Contact First Name</li>
-                                <li class="accordion-item" data-value="contact_last_name">Contact Last Name</li>
-                                <li class="accordion-item" data-value="contact_dob_name">Contact DOB</li>
-                                <li class="accordion-item" data-value="contact_ssn">Contact SSN</li>
-                                <li class="accordion-item" data-value="contact_res_complete_address">Contact Residential Address Complete
-                                </li>
-                                <li class="accordion-item" data-value="contact_street_address">Contact Street Address</li>
-                                <li class="accordion-item" data-value="contact_city">Contact City</li>
-                                <li class="accordion-item" data-value="contact_state">Contact State</li>
-                                <li class="accordion-item" data-value="contact_zipcode">Contact Zipcode</li> --}}
                                 </ul>
                             </div>
                         </div>
@@ -114,10 +103,10 @@
                             <div class="card-body">
                                 <ul>
                                     @forelse (config('dispute_letters.recipient') as $kR => $receipnttLater)
-                                    {{-- @dump($kR,$receipnttLater) --}}
-                                            <li class="accordion-item" data-value="{{ $receipnttLater }}">
-                                               <span class="text-uppercase">{{str_replace('_', ' ', $kR)}}</span>
-                                            </li>
+                                        {{-- @dump($kR,$receipnttLater) --}}
+                                        <li class="accordion-item" data-value="{{ $receipnttLater }}">
+                                            <span class="text-uppercase">{{ str_replace('_', ' ', $kR) }}</span>
+                                        </li>
                                     @empty
                                         <li>No items found.</li>
                                     @endforelse
@@ -249,10 +238,10 @@
                 handleFormSubmission();
             });
 
-
             const summernote = $('#summernote');
             let lastRange = null;
 
+            // Save the range when user interacts with summernote
             summernote.on('summernote.keyup summernote.mouseup', function() {
                 lastRange = summernote.summernote('createRange');
             });
@@ -261,22 +250,78 @@
                 lastRange = summernote.summernote('createRange');
             });
 
+            // Handle click on accordion items
             const accordionItems = document.querySelectorAll(".accordion-item");
             accordionItems.forEach(item => {
                 item.addEventListener("click", () => {
                     const value = item.getAttribute("data-value");
+
+                    // Ensure summernote regains focus
+                    summernote.summernote('focus');
+
                     if (lastRange) {
-                        summernote.summernote('focus');
-                        lastRange = summernote.summernote('createRange');
-                        lastRange.pasteHTML(value);
+                        // Restore range and insert at cursor position
+                        summernote.summernote('restoreRange');
+                        summernote.summernote('insertText', value);
+
+                        // Move the cursor to the end of the inserted text
+                        setTimeout(() => {
+                            lastRange = summernote.summernote('createRange');
+                            lastRange.collapse(false);
+                            summernote.summernote('focus');
+                        }, 10);
                     } else {
-                        summernote.summernote('focus');
+                        // If no range is found, just insert at the end
                         summernote.summernote('insertText', value);
                     }
 
                     console.log("Inserted Value:", value);
                 });
             });
+
+
+            // Prevent summernote from keeping focus when clicking other fields
+            document.addEventListener("click", (event) => {
+                // if (!event.target.closest('.note-editor') && !event.target.closest('.accordion-item')) {
+                if (event.target.closest('input[name="name"]') && event.target.closest('input[name="description"]')) {
+                    summernote.summernote('destroy'); // Temporarily destroy summernote
+                    setTimeout(() => {
+                        summernote.summernote({
+                            height: 300
+                        }); // Reinitialize it
+                    }, 100);
+                }
+            });
+
+
+
+            // const summernote = $('#summernote');
+            // let lastRange = null;
+
+            // summernote.on('summernote.keyup summernote.mouseup', function() {
+            //     lastRange = summernote.summernote('createRange');
+            // });
+
+            // summernote.on('summernote.blur', function() {
+            //     lastRange = summernote.summernote('createRange');
+            // });
+
+            // const accordionItems = document.querySelectorAll(".accordion-item");
+            // accordionItems.forEach(item => {
+            //     item.addEventListener("click", () => {
+            //         const value = item.getAttribute("data-value");
+            //         if (lastRange) {
+            //             summernote.summernote('focus');
+            //             lastRange = summernote.summernote('createRange');
+            //             lastRange.pasteHTML(value);
+            //         } else {
+            //             summernote.summernote('focus');
+            //             summernote.summernote('insertText', value);
+            //         }
+
+            //         console.log("Inserted Value:", value);
+            //     });
+            // });
         });
     </script>
 @endsection
