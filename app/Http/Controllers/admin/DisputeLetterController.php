@@ -32,11 +32,15 @@ class DisputeLetterController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "name" => 'required|string',
-            "description" => 'required|string|max:500',
+            // "name" => 'required|string',
+            // "description" => 'required|string|max:500',
             "body" => 'required|string',
         ]);
-        $data = $request->only("name", "description", "body");
+        
+        $data = $request->only("body");
+        $data['name'] = '#Default Name';
+        $data['description'] = '#Default Description';
+        // "name", "description", 
         $store = DisputeLetters::create($data);
         if ($store instanceof DisputeLetters) {
             return response()->json([
@@ -72,13 +76,13 @@ class DisputeLetterController extends Controller
      */
     public function update(Request $request, string $slug)
     {
-        $request->validate([
-            "name" => 'required|string',
-            "description" => 'required|string|max:500',
-            "body" => 'required|string|max:4000',
-        ]);
+        // $request->validate([
+        //     "name" => 'string',
+        //     "description" => 'string|max:500',
+        //     "body" => 'string|max:4000',
+        // ]);
         // dd($request->all());
-        $data = $request->only("name", "description", "body");
+        $data = $request->only("body", "description", "name");
         $update = DisputeLetters::where('slug', $slug)->update($data);
         if ($update) {
             return response()->json([

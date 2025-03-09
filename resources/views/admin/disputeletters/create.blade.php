@@ -19,7 +19,7 @@
                             @csrf
 
                             <div class="row mb-3">
-                                <div class="col-sm-12">
+                                {{-- <div class="col-sm-12">
                                     <label for="inputText" class="col-form-label"> Name <span
                                             class="text-danger">*</span></label>
                                     <input type="text" name="name" class="form-control">
@@ -38,7 +38,7 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                </div>
+                                </div> --}}
 
                                 <div class="col-sm-12 mt-5">
                                     <textarea id="summernote" name="body" class="form-control" cols="30" rows="10"></textarea>
