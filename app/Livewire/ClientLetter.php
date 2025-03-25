@@ -9,6 +9,7 @@ use App\Models\BureauAddress;
 use App\Models\Client;
 use App\Models\DisputeLetters;
 use App\Models\Item;
+use App\Models\ItemDetail;
 use App\Models\Later;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -245,13 +246,13 @@ class ClientLetter extends Component
    }
    public function goToStepTwo()
    {
-
       $this->stepOne = false;
       $this->stepTwo = true;
    }
 
    public function backToStepOne()
    {
+
       $this->stepOne = true;
       $this->stepTwo = false;
    }
@@ -319,14 +320,47 @@ class ClientLetter extends Component
 
       $body = str_replace('current_date', date('Y-m-d'), $body);
       $body = str_replace('recipient_item_list', $getClient->first_name, $body);
-      $body = str_replace('recipient_item_list_with_instruction', $getClient->last_name, $body);
+
       $body = str_replace('recipient_res_address', $recepAddress->address, $body);
       $body = str_replace('recipient_street_address', $recepAddress->address, $body);
       $body = str_replace('recipient_city', $recepAddress->city, $body);
       $body = str_replace('recipient_state', $recepAddress->state, $body);
       $body = str_replace('recipient_zipcode', $recepAddress->zipcode, $body);
       $body = str_replace('recipient_name', $recepAddress->name, $body);
-      
+
+      if (str_contains($body, 'recipients_item_list_with_instruction')) {
+         // dd($this->selectedItemOtherDetailsEqFax, $this->selectedItemOtherDetailsExprian, $this->selectedItemOtherDetailsTrans, $this->selectedItemCollDetailsEqFax, $this->selectedItemCollDetailsExprian, $this->selectedItemCollDetailsTrans, array_merge($this->selectedItemOtherDetailsEqFax, $this->selectedItemOtherDetailsExprian, $this->selectedItemOtherDetailsTrans, $this->selectedItemCollDetailsEqFax, $this->selectedItemCollDetailsExprian, $this->selectedItemCollDetailsTrans));
+         //here fetch the item details from the ItemDetails table and place the items as html in the pdf
+
+         $itemDetails = '';
+
+         // Gather all item IDs
+         $allItemIds = array_merge(
+            $this->selectedItemOtherDetailsEqFax,
+            $this->selectedItemOtherDetailsExprian,
+            $this->selectedItemOtherDetailsTrans,
+            $this->selectedItemCollDetailsEqFax,
+            $this->selectedItemCollDetailsExprian,
+            $this->selectedItemCollDetailsTrans
+         );
+
+         // Fetch the item details based on the combined IDs
+         if (!empty($allItemIds)) {
+            $itemDetailsList = ItemDetail::with('instruction')->whereIn('id', $allItemIds)->get();
+
+            // Bullet format for each item detail
+            foreach ($itemDetailsList as $item) {
+               $itemDetails .= '<ul>';
+               $itemDetails .= '<li>' . $item->item_name . ': ' . $item->account_no . '</li>';
+               $itemDetails .= '<li>Instruction: ' . ($item->instruction ? $item->instruction->instruction : 'No instruction available') . '</li>';
+               $itemDetails .= '</ul>';
+            }
+         }
+
+         // Replace the placeholder in the body with the formatted item details
+         $body = str_replace('recipients_item_list_with_instruction', $itemDetails, $body);
+      }
+
       return $body;
    }
    public function backToStepTwo()

@@ -76,7 +76,14 @@
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion">
                         <div class="card-body">
                             <ul>
-                                <li class="accordion-item" data-value="contact_full_name">Contact Full Name</li>
+                                @forelse (config('dispute_letters.contact') as $kC => $contactLater)
+                                        <li class="accordion-item" data-value="{{ $contactLater }}">
+                                            {{ str_replace('_', ' ', $kC) }}
+                                        </li>
+                                    @empty
+                                        <li>No items found.</li>
+                                    @endforelse
+                                {{-- <li class="accordion-item" data-value="contact_full_name">Contact Full Name</li>
                                 <li class="accordion-item" data-value="contact_first_name">Contact First Name</li>
                                 <li class="accordion-item" data-value="contact_last_name">Contact Last Name</li>
                                 <li class="accordion-item" data-value="contact_dob_name">Contact DOB</li>
@@ -86,7 +93,7 @@
                                 <li class="accordion-item" data-value="contact_street_address">Contact Street Address</li>
                                 <li class="accordion-item" data-value="contact_city">Contact City</li>
                                 <li class="accordion-item" data-value="contact_state">Contact State</li>
-                                <li class="accordion-item" data-value="contact_zipcode">Contact Zipcode</li>
+                                <li class="accordion-item" data-value="contact_zipcode">Contact Zipcode</li> --}}
                             </ul>
                         </div>
                     </div>
@@ -103,7 +110,15 @@
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion">
                         <div class="card-body">
                             <ul>
-                                <li class="accordion-item" data-value="current_date">Current Date(MM-DD-YYYY)</li>
+                                @forelse (config('dispute_letters.recipient') as $kR => $receipnttLater)
+                                        {{-- @dump($kR,$receipnttLater) --}}
+                                        <li class="accordion-item" data-value="{{ $receipnttLater }}">
+                                            <span class="text-uppercase">{{ str_replace('_', ' ', $kR) }}</span>
+                                        </li>
+                                    @empty
+                                        <li>No items found.</li>
+                                    @endforelse
+                                {{-- <li class="accordion-item" data-value="current_date">Current Date(MM-DD-YYYY)</li>
                                 <li class="accordion-item" data-value="recipient_item_list">Recipient Item List</li>
                                 <li class="accordion-item" data-value="recirecipient_item_list_with_instruction">Recipient Item List With
                                     Instruction</li>
@@ -112,7 +127,7 @@
                                 <li class="accordion-item" data-value="recipient_street_address">Recipient Street Address</li>
                                 <li class="accordion-item" data-value="recipient_city">Recipient City</li>
                                 <li class="accordion-item" data-value="recipient_state">Recipient State</li>
-                                <li class="accordion-item" data-value="recipient_zipcode">Recipient Zipcode</li>
+                                <li class="accordion-item" data-value="recipient_zipcode">Recipient Zipcode</li> --}}
                             </ul>
                         </div>
                     </div>

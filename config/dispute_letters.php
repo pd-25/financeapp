@@ -16,7 +16,7 @@ return [
     'recipient' => [
         'current_date' => 'current_date',
         'item_list' => 'recipient_item_list',
-        'item_list_with_instruction' => 'recipient_item_list_with_instruction',
+        'item_list_with_instruction' => 'recipients_item_list_with_instruction',
         'res_address' => 'recipient_res_address',
         'street_address' => 'recipient_street_address',
         'city' => 'recipient_city',

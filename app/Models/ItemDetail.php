@@ -37,4 +37,9 @@ class ItemDetail extends Model
 
         return $slug;
     }
+
+    public function instruction()
+    {
+        return $this->belongsTo(Instruction::class);
+    }
 }
