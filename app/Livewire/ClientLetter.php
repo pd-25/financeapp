@@ -318,7 +318,7 @@ class ClientLetter extends Component
       $body = str_replace('contact_state', $getClient->state, $body);
       $body = str_replace('contact_zipcode', $getClient->zipcode, $body);
 
-      $body = str_replace('current_date', date('Y-m-d'), $body);
+      $body = str_replace('current_date', date('d-m-Y'), $body);
       $body = str_replace('recipient_item_list', $getClient->first_name, $body);
 
       $body = str_replace('recipient_res_address', $recepAddress->address, $body);
