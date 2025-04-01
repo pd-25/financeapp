@@ -318,7 +318,7 @@ class ClientLetter extends Component
       $body = str_replace('contact_state', $getClient->state, $body);
       $body = str_replace('contact_zipcode', $getClient->zipcode, $body);
 
-      $body = str_replace('current_date', date('d-m-Y'), $body);
+      $body = str_replace('current_date', date('F j, Y'), $body);
       $body = str_replace('recipient_item_list', $getClient->first_name, $body);
 
       $body = str_replace('recipient_res_address', $recepAddress->address, $body);
@@ -335,42 +335,29 @@ class ClientLetter extends Component
          $itemDetails = '';
 
          // Gather all item IDs
-         if ($recepAddress == BureauAddressNameEnum::EQUIFAX) {
+         if ($recepAddress->name == BureauAddressNameEnum::EQUIFAX) {
             $allItemIds = array_merge(
                $this->selectedItemOtherDetailsEqFax,
                $this->selectedItemCollDetailsEqFax
             );
          }
-         if ($recepAddress == BureauAddressNameEnum::EXPERIAN) {
+         if ($recepAddress->name == BureauAddressNameEnum::EXPERIAN) {
             $allItemIds = array_merge(
                $this->selectedItemOtherDetailsExprian,
                $this->selectedItemCollDetailsExprian
             );
          }
-         if ($recepAddress == BureauAddressNameEnum::TRANSUNION) {
+         if ($recepAddress->name == BureauAddressNameEnum::TRANSUNION) {
             $allItemIds = array_merge(
                $this->selectedItemOtherDetailsTrans,
                $this->selectedItemCollDetailsTrans
             );
          }
-         // $allItemIds = array_merge(
-         //    $this->selectedItemOtherDetailsEqFax,
-         //    $this->selectedItemOtherDetailsExprian,
-         //    $this->selectedItemOtherDetailsTrans,
-         //    $this->selectedItemCollDetailsEqFax,
-         //    $this->selectedItemCollDetailsExprian,
-         //    $this->selectedItemCollDetailsTrans
-         // );
-
-         // Fetch the item details based on the combined IDs
          if (!empty($allItemIds)) {
             $itemDetailsList = ItemDetail::with('instruction')->whereIn('id', $allItemIds)->get();
-
-            // Bullet format for each item detail
             foreach ($itemDetailsList as $item) {
                $itemDetails .= '<ul>';
-               $itemDetails .= '<li>' . $item->item_name . ': ' . $item->account_no . '-' . ($item->instruction ? $item->instruction->instruction : 'No instruction available') . '</li>';
-               // $itemDetails .= '<li>Instruction: ' . ($item->instruction ? $item->instruction->instruction : 'No instruction available') . '</li>';
+               $itemDetails .= '<li>' . $item->item_name . ': ' . substr($item->account_no, 0, 5) . 'XXXXX' . ' - ' . ($item->instruction ? $item->instruction->instruction : 'No instruction available') . '</li>';
                $itemDetails .= '</ul>';
             }
          }
