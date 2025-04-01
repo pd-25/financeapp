@@ -335,14 +335,32 @@ class ClientLetter extends Component
          $itemDetails = '';
 
          // Gather all item IDs
-         $allItemIds = array_merge(
-            $this->selectedItemOtherDetailsEqFax,
-            $this->selectedItemOtherDetailsExprian,
-            $this->selectedItemOtherDetailsTrans,
-            $this->selectedItemCollDetailsEqFax,
-            $this->selectedItemCollDetailsExprian,
-            $this->selectedItemCollDetailsTrans
-         );
+         if ($recepAddress == BureauAddressNameEnum::EQUIFAX) {
+            $allItemIds = array_merge(
+               $this->selectedItemOtherDetailsEqFax,
+               $this->selectedItemCollDetailsEqFax
+            );
+         }
+         if ($recepAddress == BureauAddressNameEnum::EXPERIAN) {
+            $allItemIds = array_merge(
+               $this->selectedItemOtherDetailsExprian,
+               $this->selectedItemCollDetailsExprian
+            );
+         }
+         if ($recepAddress == BureauAddressNameEnum::TRANSUNION) {
+            $allItemIds = array_merge(
+               $this->selectedItemOtherDetailsTrans,
+               $this->selectedItemCollDetailsTrans
+            );
+         }
+         // $allItemIds = array_merge(
+         //    $this->selectedItemOtherDetailsEqFax,
+         //    $this->selectedItemOtherDetailsExprian,
+         //    $this->selectedItemOtherDetailsTrans,
+         //    $this->selectedItemCollDetailsEqFax,
+         //    $this->selectedItemCollDetailsExprian,
+         //    $this->selectedItemCollDetailsTrans
+         // );
 
          // Fetch the item details based on the combined IDs
          if (!empty($allItemIds)) {
@@ -351,8 +369,8 @@ class ClientLetter extends Component
             // Bullet format for each item detail
             foreach ($itemDetailsList as $item) {
                $itemDetails .= '<ul>';
-               $itemDetails .= '<li>' . $item->item_name . ': ' . $item->account_no . '</li>';
-               $itemDetails .= '<li>Instruction: ' . ($item->instruction ? $item->instruction->instruction : 'No instruction available') . '</li>';
+               $itemDetails .= '<li>' . $item->item_name . ': ' . $item->account_no . '-' . ($item->instruction ? $item->instruction->instruction : 'No instruction available') . '</li>';
+               // $itemDetails .= '<li>Instruction: ' . ($item->instruction ? $item->instruction->instruction : 'No instruction available') . '</li>';
                $itemDetails .= '</ul>';
             }
          }
