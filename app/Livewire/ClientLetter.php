@@ -8,6 +8,7 @@ use App\enum\ItemTypeEnum;
 use App\Models\BureauAddress;
 use App\Models\Client;
 use App\Models\DisputeLetters;
+use App\Models\Document;
 use App\Models\Item;
 use App\Models\ItemDetail;
 use App\Models\Later;
@@ -52,7 +53,7 @@ class ClientLetter extends Component
    {
       return view('livewire.client-letter', [
          'itemlists' => $this->fetchItemsWithDetails(),
-         'addresss' => BureauAddress::all()->groupBy("name"),
+         'addresss' => BureauAddress::orderBy('id', 'DESC')->get()->groupBy("name"),
          'templates' => DisputeLetters::get(),
          'laterLists' => $this->fetchLatersWithDetails()
       ]);
@@ -310,7 +311,8 @@ class ClientLetter extends Component
       $body = str_replace('contact_full_name', $getClient->first_name . ' ' . $getClient->middle_name . ' ' . $getClient->last_name, $body);
       $body = str_replace('contact_first_name', $getClient->first_name, $body);
       $body = str_replace('contact_last_name', $getClient->last_name, $body);
-      $body = str_replace('contact_dob_name', $getClient->dob, $body);
+      $dobFormatted = date('F j, Y', strtotime($getClient->dob));
+      $body = str_replace('contact_dob_name', $dobFormatted, $body);
       $body = str_replace('contact_ssn', $getClient->ssn, $body);
       $body = str_replace('contact_res_complete_address', $getClient->current_address, $body);
       $body = str_replace('contact_street_address', $getClient->current_address, $body);
@@ -445,16 +447,35 @@ class ClientLetter extends Component
 
 
          try {
-            // $data['body_html'] = mb_convert_encoding($data['body_html'], 'UTF-8', 'auto');
-            // $data['body_html'] = '<html><body>' . $data['body_html'] . '</body></html>';
+
+            if ($data['include_docs']) {
+               $documents = Document::where('client_id', $this->clientId)
+                  ->get();
+
+               foreach ($documents as $document) {
+                  if ($document) {
+                     $docPath = storage_path('app/public/' . $document->doc);
+   
+                     // For PDF document
+                     if (pathinfo($docPath, PATHINFO_EXTENSION) === 'pdf') {
+                        $pdfDoc = file_get_contents($docPath);
+                        $data['body_html'] .= '<embed src="data:application/pdf;base64,' . base64_encode($pdfDoc) . '" type="application/pdf" width="100%" height="500px">';
+                     }
+                     // For image documents
+                     else {
+                        $imageData = base64_encode(file_get_contents($docPath));
+                        $imageType = mime_content_type($docPath);
+                        $data['body_html'] .= '<img src="data:' . $imageType . ';base64,' . $imageData . '" style="width:100%; max-height:400px; object-fit:contain;">';
+                     }
+                  }
+               }
+            }
+            //if $data['include_docs'] =1, then fetch the doc from Document::where client_id=$this->clientId and insert the doc image to the body_html and also in the pdf
             $pdf = \PDF::loadHTML($data['body_html']);
             $pdfContent = $pdf->output();
-
-            // Create a temporary file
             $tempFile = tempnam(sys_get_temp_dir(), 'pdf');
             file_put_contents($tempFile, $pdfContent);
 
-            // Simulate file upload to call uploadImage
             $uploadedFile = new \Illuminate\Http\UploadedFile(
                $tempFile,
                time() . rand(0000, 9999) . '.pdf',
@@ -463,10 +484,7 @@ class ClientLetter extends Component
                true
             );
 
-            // Use uploadImage to save the PDF
             $data['body_pdf'] = $this->uploadImage($uploadedFile);
-
-            // Remove the temporary file
             unlink($tempFile);
          } catch (\Exception $e) {
             Log::debug('PDF generation failed: ', [$e->getMessage()]);

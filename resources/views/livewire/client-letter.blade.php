@@ -166,26 +166,25 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($addresss as $bureaK=>$bureau)
-                                            @if ($bureaK == \App\enum\BureauAddressNameEnum::EQUIFAX)
-                                            
+                                            @if ($bureaK == \App\enum\BureauAddressNameEnum::TRANSUNION)
                                             <tr>
                                                 {{-- @dd($selectedItemCollDetailsEqFax, count($selectedItemCollDetailsEqFax), $selectedItemOtherDetailsEqFax, count($selectedItemOtherDetailsEqFax)) --}}
-                                                <td>{{$bureaK}}- {{count($selectedItemOtherDetailsEqFax)+count($selectedItemCollDetailsEqFax)}}</td>
+                                                <td>{{$bureaK}}- {{count($selectedItemOtherDetailsTrans)+count($selectedItemCollDetailsTrans)}}</td>
                                                 <td class="table-dropdown">
-                                                    <select class="form-control" wire:model="address_selected_equifax">
+                                                    <select class="form-control" wire:model="address_selected_transunion">
                                                        <option>--select--</option>
-                                                        @forelse ($bureau as $adddres)
-                                                        <option value="{{$adddres->id}}">{{$adddres->address}}</option>
+                                                        @forelse ($bureau as $adddresT)
+                                                        <option value="{{$adddresT->id}}">{{$adddresT->address}}</option>
                                                         @empty
                                                         <option disabled>not found</option>
                                                         @endforelse
                                                         
                                                     </select></td>
                                                 <td class="table-dropdown">
-                                                    <select class="form-control" wire:model="dispute_letter_selected_equifax">
+                                                    <select class="form-control" wire:model="dispute_letter_selected_transunion">
                                                       <option value="">--select--</option>
-                                                        @forelse ($templates as $template)
-                                                           <option value="{{$template->id}}">{{$template->name}}</option>
+                                                        @forelse ($templates as $templateT)
+                                                           <option value="{{$templateT->id}}">{{$templateT->name}}</option>
                                                        @empty
                                                            <option disabled>not found</option>
                                                        @endforelse
@@ -193,6 +192,7 @@
     
                                             </tr>
                                             @endif
+                                            
     
                                             @if ($bureaK == \App\enum\BureauAddressNameEnum::EXPERIAN)
                                             <tr>
@@ -220,25 +220,27 @@
     
                                             </tr>
                                             @endif
-                                            @if ($bureaK == \App\enum\BureauAddressNameEnum::TRANSUNION)
+
+                                            @if ($bureaK == \App\enum\BureauAddressNameEnum::EQUIFAX)
+                                            
                                             <tr>
                                                 {{-- @dd($selectedItemCollDetailsEqFax, count($selectedItemCollDetailsEqFax), $selectedItemOtherDetailsEqFax, count($selectedItemOtherDetailsEqFax)) --}}
-                                                <td>{{$bureaK}}- {{count($selectedItemOtherDetailsTrans)+count($selectedItemCollDetailsTrans)}}</td>
+                                                <td>{{$bureaK}}- {{count($selectedItemOtherDetailsEqFax)+count($selectedItemCollDetailsEqFax)}}</td>
                                                 <td class="table-dropdown">
-                                                    <select class="form-control" wire:model="address_selected_transunion">
+                                                    <select class="form-control" wire:model="address_selected_equifax">
                                                        <option>--select--</option>
-                                                        @forelse ($bureau as $adddresT)
-                                                        <option value="{{$adddresT->id}}">{{$adddresT->address}}</option>
+                                                        @forelse ($bureau as $adddres)
+                                                        <option value="{{$adddres->id}}">{{$adddres->address}}</option>
                                                         @empty
                                                         <option disabled>not found</option>
                                                         @endforelse
                                                         
                                                     </select></td>
                                                 <td class="table-dropdown">
-                                                    <select class="form-control" wire:model="dispute_letter_selected_transunion">
+                                                    <select class="form-control" wire:model="dispute_letter_selected_equifax">
                                                       <option value="">--select--</option>
-                                                        @forelse ($templates as $templateT)
-                                                           <option value="{{$templateT->id}}">{{$templateT->name}}</option>
+                                                        @forelse ($templates as $template)
+                                                           <option value="{{$template->id}}">{{$template->name}}</option>
                                                        @empty
                                                            <option disabled>not found</option>
                                                        @endforelse
@@ -246,6 +248,7 @@
     
                                             </tr>
                                             @endif
+                                            
                                            
                                         @endforeach
                                             
@@ -279,6 +282,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            
                                             @foreach ($addresss as $bureaK=>$bureau)
                                             @if ($bureaK == \App\enum\BureauAddressNameEnum::EQUIFAX)
                                             
