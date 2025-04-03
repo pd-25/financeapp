@@ -35,7 +35,7 @@
                                         <td>
                                             {{-- <a href="{{ route('instructions.edit', $clientdocument?->slug) }}"><i
                                                     class="ri-pencil-fill"></i></a> --}}
-                                                    <button 
+                                                    {{-- <button 
                                                     class="btn btn-primary edit-report-source-btn" 
                                                     data-name="{{$clientdocument?->name }}" 
                                                     data-instruction="{{$clientdocument?->instruction}}" 
@@ -44,7 +44,7 @@
                                                     data-target="#editInstructionModal">
                                                     Edit
                                                 </button>
-                                                    </a>
+                                                    </a> --}}
                                             <form method="POST"
                                                 action="{{ route('client-documents.destroy', $clientdocument?->slug) }}"
                                                 class="d-inline-block pl-2">
