@@ -51,13 +51,13 @@
     
                                     @foreach ($itemlists->where('item_type', '!=', \App\enum\ItemTypeEnum::COLLECTION) as $itemother)
                                         <tr>
-                                        <td>{{ $itemother?->itemDetails?->first()->item_name }} - {{ $itemother->itemDetails->first()->account_no }}</td>
+                                        <td>{{ $itemother?->itemDetails?->first()?->item_name }} - {{ $itemother->itemDetails->first()?->account_no }}</td>
                                         <td>
                                                 @if ($itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::EQUIFAX)->first())
                                                 <input type="checkbox" 
                                                 wire:model="selectedItemOtherDetailsEqFax" 
-                                                value="{{ $itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::EQUIFAX)->first()->id }}">
-                                                {{-- @dump($itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::EQUIFAX)->first()->id) --}}
+                                                value="{{ $itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::EQUIFAX)->first()?->id }}">
+                                                {{-- @dump($itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::EQUIFAX)->first()?->id) --}}
                                                 
                                                 
                                             @endif
@@ -66,18 +66,18 @@
                                             @if ($itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::EXPERIAN)->first())
                                                 <input type="checkbox" 
                                                 wire:model="selectedItemOtherDetailsExprian" 
-                                                value="{{ $itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::EXPERIAN)->first()->id }}">
+                                                value="{{ $itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::EXPERIAN)->first()?->id }}">
                                                 
-                                                {{-- @dump($itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::EXPERIAN)->first()->id) --}}
+                                                {{-- @dump($itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::EXPERIAN)->first()?->id) --}}
                                             @endif
                                         </td>
                                         <td>
                                             @if ($itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::TRANSUNION)->first())
                                             <input type="checkbox" 
                                             wire:model="selectedItemOtherDetailsTrans" 
-                                            value="{{ $itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::TRANSUNION)->first()->id }}">
+                                            value="{{ $itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::TRANSUNION)->first()?->id }}">
                                             
-                                            {{-- @dump($itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::TRANSUNION)->first()->id) --}}
+                                            {{-- @dump($itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::TRANSUNION)->first()?->id) --}}
                                         @endif
                                         </td>
                                         
@@ -98,34 +98,34 @@
     
                                     @foreach ($itemlists->where('item_type', \App\enum\ItemTypeEnum::COLLECTION) as $itemColl)
                                                 <tr>
-                                                    <td>{{ $itemColl->itemDetails->first()->item_name }}
-                                                        -{{ $itemColl->itemDetails->first()->account_no }}</td>
+                                                    <td>{{ $itemColl->itemDetails->first()?->item_name }}
+                                                        -{{ $itemColl->itemDetails->first()?->account_no }}</td>
     
                                                     <td>
                                                         @if ($itemColl->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::EQUIFAX)->first())
                                                             <input type="checkbox" 
                                                             wire:model="selectedItemCollDetailsEqFax" 
-                                                            value="{{ $itemColl->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::EQUIFAX)->first()->id }}">
+                                                            value="{{ $itemColl->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::EQUIFAX)->first()?->id }}">
                                                             
-                                                            {{-- @dump($itemColl->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::EQUIFAX)->first()->id) --}}
+                                                            {{-- @dump($itemColl->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::EQUIFAX)->first()?->id) --}}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($itemColl->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::EXPERIAN)->first())
                                                             <input type="checkbox" 
                                                             wire:model="selectedItemCollDetailsExprian" 
-                                                            value="{{ $itemColl->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::EXPERIAN)->first()->id }}">
+                                                            value="{{ $itemColl->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::EXPERIAN)->first()?->id }}">
                                                             
-                                                            {{-- @dump($itemColl->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::EXPERIAN)->first()->id) --}}
+                                                            {{-- @dump($itemColl->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::EXPERIAN)->first()?->id) --}}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($itemColl->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::TRANSUNION)->first())
                                                             <input type="checkbox" 
                                                             wire:model="selectedItemCollDetailsTrans" 
-                                                            value="{{ $itemColl->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::TRANSUNION)->first()->id }}">
+                                                            value="{{ $itemColl->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::TRANSUNION)->first()?->id }}">
                                                             
-                                                            {{-- @dump($itemColl->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::TRANSUNION)->first()->id) --}}
+                                                            {{-- @dump($itemColl->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::TRANSUNION)->first()?->id) --}}
                                                             
                                                         @endif
                                                     </td>
