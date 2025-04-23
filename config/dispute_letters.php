@@ -14,6 +14,7 @@ return [
         'CONTACT ZIPCODE' => 'contact_zipcode',
     ],
     'recipient' => [
+        'name' => 'recipient_name',
         'current_date' => 'current_date',
         'item_list' => 'recipient_item_list',
         'item_list_with_instruction' => 'recipients_item_list_with_instruction',
@@ -22,6 +23,6 @@ return [
         'city' => 'recipient_city',
         'state' => 'recipient_state',
         'zipcode' => 'recipient_zipcode',
-        'name' => 'recipient_name',
+        
     ],
 ];

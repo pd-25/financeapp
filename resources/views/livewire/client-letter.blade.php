@@ -51,33 +51,33 @@
     
                                     @foreach ($itemlists->where('item_type', '!=', \App\enum\ItemTypeEnum::COLLECTION) as $itemother)
                                         <tr>
-                                        <td>{{ $itemother->itemDetails->first()->item_name }} - {{ $itemother->itemDetails->first()->account_no }}</td>
+                                        <td>{{ $itemother?->itemDetails?->first()->item_name }} - {{ $itemother->itemDetails->first()->account_no }}</td>
                                         <td>
-                                                @if ($itemother->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::EQUIFAX)->first())
+                                                @if ($itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::EQUIFAX)->first())
                                                 <input type="checkbox" 
                                                 wire:model="selectedItemOtherDetailsEqFax" 
-                                                value="{{ $itemother->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::EQUIFAX)->first()->id }}">
-                                                {{-- @dump($itemother->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::EQUIFAX)->first()->id) --}}
+                                                value="{{ $itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::EQUIFAX)->first()->id }}">
+                                                {{-- @dump($itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::EQUIFAX)->first()->id) --}}
                                                 
                                                 
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($itemother->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::EXPERIAN)->first())
+                                            @if ($itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::EXPERIAN)->first())
                                                 <input type="checkbox" 
                                                 wire:model="selectedItemOtherDetailsExprian" 
-                                                value="{{ $itemother->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::EXPERIAN)->first()->id }}">
+                                                value="{{ $itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::EXPERIAN)->first()->id }}">
                                                 
-                                                {{-- @dump($itemother->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::EXPERIAN)->first()->id) --}}
+                                                {{-- @dump($itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::EXPERIAN)->first()->id) --}}
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($itemother->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::TRANSUNION)->first())
+                                            @if ($itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::TRANSUNION)->first())
                                             <input type="checkbox" 
                                             wire:model="selectedItemOtherDetailsTrans" 
-                                            value="{{ $itemother->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::TRANSUNION)->first()->id }}">
+                                            value="{{ $itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::TRANSUNION)->first()->id }}">
                                             
-                                            {{-- @dump($itemother->itemDetails->where('bureau_name', \App\enum\BureauAddressNameEnum::TRANSUNION)->first()->id) --}}
+                                            {{-- @dump($itemother?->itemDetails?->where('bureau_name', \App\enum\BureauAddressNameEnum::TRANSUNION)->first()->id) --}}
                                         @endif
                                         </td>
                                         
@@ -166,61 +166,7 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($addresss as $bureaK=>$bureau)
-                                            @if ($bureaK == \App\enum\BureauAddressNameEnum::TRANSUNION)
-                                            <tr>
-                                                {{-- @dd($selectedItemCollDetailsEqFax, count($selectedItemCollDetailsEqFax), $selectedItemOtherDetailsEqFax, count($selectedItemOtherDetailsEqFax)) --}}
-                                                <td>{{$bureaK}}- {{count($selectedItemOtherDetailsTrans)+count($selectedItemCollDetailsTrans)}}</td>
-                                                <td class="table-dropdown">
-                                                    <select class="form-control" wire:model="address_selected_transunion">
-                                                       <option>--select--</option>
-                                                        @forelse ($bureau as $adddresT)
-                                                        <option value="{{$adddresT->id}}">{{$adddresT->address}}</option>
-                                                        @empty
-                                                        <option disabled>not found</option>
-                                                        @endforelse
-                                                        
-                                                    </select></td>
-                                                <td class="table-dropdown">
-                                                    <select class="form-control" wire:model="dispute_letter_selected_transunion">
-                                                      <option value="">--select--</option>
-                                                        @forelse ($templates as $templateT)
-                                                           <option value="{{$templateT->id}}">{{$templateT->name}}</option>
-                                                       @empty
-                                                           <option disabled>not found</option>
-                                                       @endforelse
-                                                    </select></td>
-    
-                                            </tr>
-                                            @endif
                                             
-    
-                                            @if ($bureaK == \App\enum\BureauAddressNameEnum::EXPERIAN)
-                                            <tr>
-                                                {{-- @dd($selectedItemCollDetailsExprian, count($selectedItemCollDetailsExprian), $selectedItemOtherDetailsExprian, count($selectedItemOtherDetailsExprian)) --}}
-                                                <td>{{$bureaK}}- {{count($selectedItemOtherDetailsExprian)+count($selectedItemCollDetailsExprian)}}</td>
-                                                <td class="table-dropdown">
-                                                    <select class="form-control" wire:model="address_selected_experion">
-                                                       <option>--select--</option>
-                                                        @forelse ($bureau as $adddresE)
-                                                        <option value="{{$adddresE->id}}">{{$adddresE->address}}</option>
-                                                        @empty
-                                                        <option disabled>not found</option>
-                                                        @endforelse
-                                                        
-                                                    </select></td>
-                                                <td class="table-dropdown">
-                                                    <select class="form-control" wire:model="dispute_letter_selected_experion">
-                                                      <option value="">--select--</option>
-                                                        @forelse ($templates as $templateE)
-                                                           <option value="{{$templateE->id}}">{{$templateE->name}}</option>
-                                                       @empty
-                                                           <option disabled>not found</option>
-                                                       @endforelse
-                                                    </select></td>
-    
-                                            </tr>
-                                            @endif
-
                                             @if ($bureaK == \App\enum\BureauAddressNameEnum::EQUIFAX)
                                             
                                             <tr>
@@ -248,6 +194,61 @@
     
                                             </tr>
                                             @endif
+    
+                                            @if ($bureaK == \App\enum\BureauAddressNameEnum::EXPERIAN)
+                                            <tr>
+                                                {{-- @dd($selectedItemCollDetailsExprian, count($selectedItemCollDetailsExprian), $selectedItemOtherDetailsExprian, count($selectedItemOtherDetailsExprian)) --}}
+                                                <td>{{$bureaK}}- {{count($selectedItemOtherDetailsExprian)+count($selectedItemCollDetailsExprian)}}</td>
+                                                <td class="table-dropdown">
+                                                    <select class="form-control" wire:model="address_selected_experion">
+                                                       <option>--select--</option>
+                                                        @forelse ($bureau as $adddresE)
+                                                        <option value="{{$adddresE->id}}">{{$adddresE->address}}</option>
+                                                        @empty
+                                                        <option disabled>not found</option>
+                                                        @endforelse
+                                                        
+                                                    </select></td>
+                                                <td class="table-dropdown">
+                                                    <select class="form-control" wire:model="dispute_letter_selected_experion">
+                                                      <option value="">--select--</option>
+                                                        @forelse ($templates as $templateE)
+                                                           <option value="{{$templateE->id}}">{{$templateE->name}}</option>
+                                                       @empty
+                                                           <option disabled>not found</option>
+                                                       @endforelse
+                                                    </select></td>
+    
+                                            </tr>
+                                            @endif
+                                            @if ($bureaK == \App\enum\BureauAddressNameEnum::TRANSUNION)
+                                            <tr>
+                                                {{-- @dd($selectedItemCollDetailsEqFax, count($selectedItemCollDetailsEqFax), $selectedItemOtherDetailsEqFax, count($selectedItemOtherDetailsEqFax)) --}}
+                                                <td>{{$bureaK}}- {{count($selectedItemOtherDetailsTrans)+count($selectedItemCollDetailsTrans)}}</td>
+                                                <td class="table-dropdown">
+                                                    <select class="form-control" wire:model="address_selected_transunion">
+                                                       <option>--select--</option>
+                                                        @forelse ($bureau as $adddresT)
+                                                        <option value="{{$adddresT->id}}">{{$adddresT->address}}</option>
+                                                        @empty
+                                                        <option disabled>not found</option>
+                                                        @endforelse
+                                                        
+                                                    </select></td>
+                                                <td class="table-dropdown">
+                                                    <select class="form-control" wire:model="dispute_letter_selected_transunion">
+                                                      <option value="">--select--</option>
+                                                        @forelse ($templates as $templateT)
+                                                           <option value="{{$templateT->id}}">{{$templateT->name}}</option>
+                                                       @empty
+                                                           <option disabled>not found</option>
+                                                       @endforelse
+                                                    </select></td>
+    
+                                            </tr>
+                                            @endif
+
+                                            
                                             
                                            
                                         @endforeach

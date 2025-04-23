@@ -13,7 +13,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Name</th>
+                                    <th scope="col">Name|Type</th>
                                     <th scope="col">Document</th>
                                     <th scope="col">Date Created</th>
                                     <th scope="col">Action</th>
@@ -26,8 +26,7 @@
                                 @foreach ($clientdocuments as $clientdocument)
                                     <tr>
                                         <th scope="row">{{ $startIndex++ }}</th>
-                                        <td>{{ $clientdocument?->name }}
-                                        </td>
+                                        <td>{{ $clientdocument?->name }} | <span class="text-success">{{$clientdocument?->doc_type}}</span></td>
                                         <td><a href="{{asset('storage'. $clientdocument?->doc)}}" target="_blank" rel="noopener noreferrer">Preview</a></td>
                                         <td> {{ \Carbon\Carbon::parse($clientdocument?->created_at)->isoFormat('Do MMMM YYYY') }}
                                         </td>
@@ -100,6 +99,21 @@
                         <div class="col-sm-12">
                             <label for="description" class="col-form-label">Document</label>
                             <input type="file" name="doc" class="form-control">
+                            @error('doc')
+                                <span class="text-danger" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label for="description" class="col-form-label">Document Type</label>
+                            <select name="doc_type" id="" class="form-control">
+                                
+                                <option value="ID">ID</option>
+                                <option value="Others">Others</option>
+                                
+                            </select>
                             @error('doc')
                                 <span class="text-danger" role="alert">
                                     <strong>{{ $message }}</strong>

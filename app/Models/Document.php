@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 class Document extends Model
 {
-    protected $fillable = ["slug", "name", "doc", "client_id"];
+    protected $fillable = ["slug", "name", "doc", "client_id", "doc_type"];
 
     /**
      * Boot the model.

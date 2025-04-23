@@ -53,7 +53,7 @@ class ClientLetter extends Component
    {
       return view('livewire.client-letter', [
          'itemlists' => $this->fetchItemsWithDetails(),
-         'addresss' => BureauAddress::orderBy('id', 'DESC')->get()->groupBy("name"),
+         'addresss' => BureauAddress::orderBy('id', 'ASC')->get()->groupBy("name"),
          'templates' => DisputeLetters::get(),
          'laterLists' => $this->fetchLatersWithDetails()
       ]);

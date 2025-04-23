@@ -38,6 +38,7 @@ class ClientItem extends Component
     public function toggleForm()
     {
         $this->formVisible = !$this->formVisible;
+        $this->resetForm();
     }
 
     public function editItem($itemSlug)
@@ -190,16 +191,19 @@ class ClientItem extends Component
 
     private function resetForm()
     {
-        $this->Equifax_bureau_status = $this->equifax_item_name = $this->item_type = $this->equifax_account_no = $this->equifax_open_date = $this->equifax_status = $this->equifax_instruction_id = '';
-        $this->Experian_bureau_status = $this->experian_item_name = $this->item_type = $this->experian_account_no = $this->experian_open_date = $this->experian_status = $this->experian_instruction_id = '';
-        $this->Transunion_bureau_status = $this->transunion_item_name = $this->item_type = $this->transunion_account_no = $this->transunion_open_date = $this->transunion_status = $this->transunion_instruction_id = '';
+        $this->item_type = $this->itemId =null;
+        $this->Equifax_bureau_status= $this->Equifax_item_name= $this->Equifax_account_no= $this->Equifax_open_date= $this->Equifax_status= $this->Equifax_instruction_id = '';
+        $this->Experian_bureau_status= $this->Experian_item_name= $this->Experian_account_no= $this->Experian_open_date= $this->Experian_status= $this->Experian_instruction_id= '';
+        $this->Transunion_bureau_status= $this->Transunion_item_name= $this->Transunion_account_no= $this->Transunion_open_date= $this->Transunion_status= $this->Transunion_instruction_id = '';
     }
 
     public function syncBureauStatus()
     {
         if (!$this->itemId) {
+            // dd("if");
             $this->Experian_bureau_status = $this->Transunion_bureau_status = $this->Equifax_bureau_status;
         }
+        // dd("if not");
     }
 
     public function syncItemName()

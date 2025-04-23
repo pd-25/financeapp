@@ -8,7 +8,7 @@
                     <p id="flash-message" class="alert alert-info">{{ Session::get('msg') }}</p>
                 @endif
                 <a href="javascript:void(0)" wire:click="toggleForm">
-                    <u> <span id="add-hide-btn">{{ $formVisible ? 'Hide Item Form' : 'Add Item Form' }}</span></u>
+                    <u> <span id="add-hide-btn">{{ $formVisible ? 'Hide Item Form' : 'Add New Item' }}</span></u>
                 </a>
             </div>
 
@@ -328,7 +328,7 @@
                     <!-- Buttons -->
                     <div class="form-group row mt-3">
                         <div class="col-sm-12 text-right">
-                            <button type="submit" class="btn btn-success" id="submitBtn">Save and Add New</button>
+                            <button type="submit" class="btn btn-success" id="submitBtn">Save</button>
                         </div>
                     </div>
                 </form>

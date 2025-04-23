@@ -43,6 +43,7 @@ class DocumentController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'doc' => 'required|mimes:jpeg,bmp,png,gif,svg,jpg|max:10240',
+            'doc_type' => 'required|in:ID,Others'
         ]);
         // dd($data);
         $findClient = Client::where('slug', $client_slug)->first();
