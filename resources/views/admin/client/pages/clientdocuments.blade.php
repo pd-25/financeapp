@@ -13,7 +13,9 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Name|Type</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Type</th>
+                                    
                                     <th scope="col">Document</th>
                                     <th scope="col">Date Created</th>
                                     <th scope="col">Action</th>
@@ -26,7 +28,8 @@
                                 @foreach ($clientdocuments as $clientdocument)
                                     <tr>
                                         <th scope="row">{{ $startIndex++ }}</th>
-                                        <td>{{ $clientdocument?->name }} | <span class="text-success">{{$clientdocument?->doc_type}}</span></td>
+                                        <td>{{ $clientdocument?->name }}</td>
+                                        <td><span class="text-success">{{$clientdocument?->doc_type ?? 'N/A'}}</span></td>
                                         <td><a href="{{asset('storage'. $clientdocument?->doc)}}" target="_blank" rel="noopener noreferrer">Preview</a></td>
                                         <td> {{ \Carbon\Carbon::parse($clientdocument?->created_at)->isoFormat('Do MMMM YYYY') }}
                                         </td>

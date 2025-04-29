@@ -7,6 +7,7 @@ use App\enum\ItemTypeEnum;
 use App\Models\Instruction;
 use App\Models\Item;
 use App\Models\ItemDetail;
+use App\Models\LaterItemDetail;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -240,6 +241,43 @@ class ClientItem extends Component
             $this->Transunion_instruction_id = $this->Experian_instruction_id = $this->Equifax_instruction_id;
         }
     }
+
+
+    public function deleteItem($itemSlug)
+    {
+        $item = $this->getItem($itemSlug);
+
+        // Ensure item exists
+        if (!$item) {
+            session()->flash('msgg', 'Item not found.');
+            return;
+        }
+
+        try {
+            DB::transaction(function () use ($item) {
+                // Delete LaterItemDetail records
+                foreach ($item->itemDetails as $itemDetail) {
+                    LaterItemDetail::where('item_detail_id', $itemDetail->id)->delete();
+                }
+
+                // Delete itemDetails
+                $item->itemDetails->each(function ($itemDetail) {
+                    $itemDetail->delete();
+                });
+
+                // Delete the item itself
+                $item->delete();
+            });
+
+            session()->flash('msgg', 'Item deleted successfully.');
+            $this->itemlists = $this->fetchItemsWithDetails();
+        } catch (\Exception $e) {
+            session()->flash('msgg', 'Item not deleted: ' . $e->getMessage());
+            // Optionally log the exception: Log::error($e);
+        }
+    }
+
+    
 
 
 

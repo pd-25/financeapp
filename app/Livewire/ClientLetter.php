@@ -451,9 +451,10 @@ class ClientLetter extends Component
             if ($data['include_docs']) {
                $documents = Document::where('client_id', $this->clientId)
                   ->get();
-
                foreach ($documents as $document) {
-                  if ($document) {
+                
+                  if ($document && ($document->doc_type == 'ID')) {
+                     // dd($document);
                      $docPath = storage_path('app/public/' . $document->doc);
    
                      // For PDF document
