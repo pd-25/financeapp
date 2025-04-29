@@ -13,7 +13,7 @@ use Livewire\Component;
 
 class ClientItem extends Component
 {
-    public $formVisible = false;
+    public $formVisible = true;
     public $itemlists = [];
     public $clientDetails;
     public $clientId, $itemId, $item_type;
@@ -38,7 +38,7 @@ class ClientItem extends Component
 
     public function toggleForm()
     {
-        $this->formVisible = !$this->formVisible;
+        // $this->formVisible = !$this->formVisible;
         $this->resetForm();
     }
 
