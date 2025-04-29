@@ -51,9 +51,14 @@ class ClientLetter extends Component
 
    public function render()
    {
+      $addresses = BureauAddress::orderBy('id', 'ASC')->get()->groupBy('name');
+      $customOrder = ['Equifax', 'Experian', 'Transunion'];
+      $sorted = collect($customOrder)->mapWithKeys(function ($name) use ($addresses) {
+         return [$name => $addresses->get($name, collect())];
+     });
       return view('livewire.client-letter', [
          'itemlists' => $this->fetchItemsWithDetails(),
-         'addresss' => BureauAddress::orderBy('id', 'ASC')->get()->groupBy("name"),
+         'addresss' => $sorted,
          'templates' => DisputeLetters::get(),
          'laterLists' => $this->fetchLatersWithDetails()
       ]);
