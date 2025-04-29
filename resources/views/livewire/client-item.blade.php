@@ -10,7 +10,7 @@
                     <p id="flash-message" class="alert alert-info">{{ Session::get('msg') }}</p>
                 @endif
                 <a href="javascript:void(0)" wire:click="toggleForm">
-                    <u> <span id="add-hide-btn">{{ $formVisible ? 'Hide Item Form' : 'Add New Item' }}</span></u>
+                    <u> <span id="add-hide-btn">{{ $formVisible ? 'Close Item Form' : 'Add New Item' }}</span></u>
                 </a>
             </div>
 

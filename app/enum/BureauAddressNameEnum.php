@@ -12,9 +12,11 @@ class BureauAddressNameEnum
     public static function values(): array
     {
         return [
-            self::EQUIFAX,
-            self::EXPERIAN,
+            
+            
             self::TRANSUNION,
+            self::EXPERIAN,
+            self::EQUIFAX,
         ];
     }
 }
