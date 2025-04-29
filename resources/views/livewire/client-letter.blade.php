@@ -283,7 +283,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+                                            @dd($addresss)
                                             @foreach ($addresss as $bureaK=>$bureau)
                                             @if ($bureaK == \App\enum\BureauAddressNameEnum::EQUIFAX)
                                             
