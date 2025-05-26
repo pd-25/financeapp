@@ -12,6 +12,7 @@ use App\Models\Document;
 use App\Models\Item;
 use App\Models\ItemDetail;
 use App\Models\Later;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -477,7 +478,7 @@ class ClientLetter extends Component
                }
             }
             //if $data['include_docs'] =1, then fetch the doc from Document::where client_id=$this->clientId and insert the doc image to the body_html and also in the pdf
-            $pdf = \PDF::loadHTML($data['body_html']);
+            $pdf = Pdf::loadHTML($data['body_html']);
             $pdfContent = $pdf->output();
             $tempFile = tempnam(sys_get_temp_dir(), 'pdf');
             file_put_contents($tempFile, $pdfContent);
