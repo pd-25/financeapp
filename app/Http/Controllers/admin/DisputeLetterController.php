@@ -108,7 +108,10 @@ class DisputeLetterController extends Controller
         // ]);
         // dd($request->all());
         $data = $request->only("body", "description", "name");
-        $data['body'] = $this->sanitizeBodyHtml($data['body']);
+        if (isset($data['body']) && !empty($data['body'])) {
+            $data['body'] = $this->sanitizeBodyHtml($data['body']);
+        }
+
         $update = DisputeLetters::where('slug', $slug)->update($data);
         if ($update) {
             return response()->json([
