@@ -36,10 +36,15 @@ class DisputeLetterController extends Controller
             // "description" => 'required|string|max:500',
             "body" => 'required|string',
         ]);
-        
-        $data = $request->only("body");
-        $data['name'] = '#Default Name';
-        $data['description'] = '#Default Description';
+
+        $body = $request->input('body');
+        // 🔍 Clean ligatures and enforce UTF-8 safe content
+        $body = $this->sanitizeBodyHtml($body);
+        $data = [
+            'body' => $body,
+            'name' => '#Default Name',
+            'description' => '#Default Description',
+        ];
         // "name", "description", 
         $store = DisputeLetters::create($data);
         if ($store instanceof DisputeLetters) {
@@ -52,6 +57,26 @@ class DisputeLetterController extends Controller
             return back()->with('msg', 'Some error occur..');
         }
     }
+    private function sanitizeBodyHtml(string $html): string
+    {
+        // Replace ligature Unicode chars with standard characters
+        $replacements = [
+            'ﬁ' => 'fi',
+            'ﬂ' => 'fl',
+            'ﬃ' => 'ffi',
+            'ﬄ' => 'ffl',
+            'ﬀ' => 'ff',
+            'ﬅ' => 'ft',
+            'ﬆ' => 'st'
+        ];
+
+        // Replace known ligatures
+        $html = str_replace(array_keys($replacements), array_values($replacements), $html);
+
+        // Optional: enforce UTF-8 and encode HTML entities
+        return mb_convert_encoding($html, 'UTF-8', 'auto');
+    }
+
 
     /**
      * Display the specified resource.
@@ -83,6 +108,7 @@ class DisputeLetterController extends Controller
         // ]);
         // dd($request->all());
         $data = $request->only("body", "description", "name");
+        $data['body'] = $this->sanitizeBodyHtml($data['body']);
         $update = DisputeLetters::where('slug', $slug)->update($data);
         if ($update) {
             return response()->json([

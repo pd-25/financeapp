@@ -478,6 +478,7 @@ class ClientLetter extends Component
                }
             }
             //if $data['include_docs'] =1, then fetch the doc from Document::where client_id=$this->clientId and insert the doc image to the body_html and also in the pdf
+            // $html= str_replace('fi', '', $data['body_html']);
             $pdf = Pdf::loadHTML($data['body_html']);
             $pdfContent = $pdf->output();
             $tempFile = tempnam(sys_get_temp_dir(), 'pdf');
